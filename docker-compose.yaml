@@ -1,7 +1,11 @@
-# volumes:
+volumes:
+    postgres-data:
+        external: true
+
 services:
   fastapi:
     environment:
+      DATABASE_URL: postgresql://example_user:secret@postgres/example_db
       CORS_HOST: http://localhost:3000
     build:
       context: api
@@ -25,3 +29,16 @@ services:
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
       REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+
+
+  postgres:
+        image: postgres:14.5-bullseye
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: gymscribe
+            POSTGRES_DB: gymscribe
+        ports:
+            - 15432:5432
+        
