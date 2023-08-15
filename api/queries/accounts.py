@@ -79,7 +79,10 @@ class UserRepo(BaseModel):
                 row = cur.fetchone()
                 return self.user_record_to_dict(row, cur.description)
 
-    def create_user(self, user: UserIn, hashed_password: str) -> AccountOutWithPassword:
+    def create_user(
+            self, user: UserIn,
+            hashed_password: str
+            ) -> AccountOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -132,3 +135,19 @@ class UserRepo(BaseModel):
                     """,
                     [id],
                 )
+
+    def get_user_by_email(self, email):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT id, username, email, password AS hashed_password
+                    FROM users
+                    WHERE email = %s
+                    """,
+                    [email],
+                )
+                row = cur.fetchone()
+                if row:
+                    return self.user_record_to_dict(row, cur.description)
+                return None
