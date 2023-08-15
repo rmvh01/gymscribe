@@ -1,12 +1,8 @@
 from fastapi import (
-    Depends,
-    HTTPException,
-    status,
-    Response,
     APIRouter,
-    Request,
 )
 from pydantic import BaseModel
+from queries.exercise import ExerciseRepo
 
 router = APIRouter()
 
