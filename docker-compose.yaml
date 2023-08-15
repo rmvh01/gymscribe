@@ -5,7 +5,8 @@ volumes:
 services:
   fastapi:
     environment:
-      DATABASE_URL: postgresql://example_user:secret@postgres/example_db
+      SIGNING_KEY: ${SIGNING_KEY}
+      DATABASE_URL: postgresql://gymscribe:password@postgres/gymscribe
       CORS_HOST: http://localhost:3000
     build:
       context: api
@@ -41,4 +42,3 @@ services:
             POSTGRES_DB: gymscribe
         ports:
             - 15432:5432
-        
