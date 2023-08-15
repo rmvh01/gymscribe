@@ -1,24 +1,19 @@
 from fastapi import (
-    Depends,
-    HTTPException,
-    status,
-    Response,
     APIRouter,
-    Request,
+    Depends
 )
 from pydantic import BaseModel
+from queries.exercise import ExerciseRepo, ExerciseIn
+
 
 router = APIRouter()
 
 
-class Exercise(BaseModel):
-    name: str
-    description: str
-    user_id: int
-
-
-@router.post("/api/exercise", response_model=Exercise)
+@router.post("/api/exercise", response_model=ExerciseIn)
 def create_exercise(
-    repo: ExerciseRepo, exercise: Exercise
+    exercise: ExerciseIn,
+    repo: ExerciseRepo = Depends(),
 ):
-    pass
+    return repo.create_exercise(
+        exercise
+    )
