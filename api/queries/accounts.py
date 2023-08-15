@@ -135,7 +135,7 @@ class UserRepo(BaseModel):
                     """,
                     [id],
                 )
-                
+
     def get_user_by_email(self, email):
         with pool.connection() as conn:
             with conn.cursor() as cur:
