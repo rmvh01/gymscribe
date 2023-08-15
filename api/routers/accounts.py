@@ -91,7 +91,7 @@ def update_user(
     existing_user = repo.get_user_by_id(id)
     if existing_user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    updated_user_record = repo.update_user(id, user)
+    updated_user_record = repo.update_user(id,)
     return updated_user_record
 
 
