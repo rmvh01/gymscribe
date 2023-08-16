@@ -10,7 +10,7 @@ steps = [
         """,
         # "Down" SQL statement
         """
-        DROP TABLE workouts;
+        DROP TABLE workout_exercises;
         """,
     ],
 ]
