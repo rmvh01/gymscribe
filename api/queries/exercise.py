@@ -79,3 +79,28 @@ class ExerciseRepo:
                     return {"message": "Exercise deleted successfully!"}
         except Exception:
             return {"message": "Failed to delete exercise"}
+
+    def get_exercise_by_id(self, exercise_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT id, name, description, user_id
+                        FROM exercises
+                        WHERE id = %s;
+                        """,
+                        [exercise_id]
+                    )
+                    row = cur.fetchone()
+                    if row:
+                        return ExerciseOut(
+                            id=row[0],
+                            name=row[1],
+                            description=row[2],
+                            user_id=row[3]
+                        )
+                    else:
+                        return None
+        except Exception:
+            return {"message": "Failed to fetch exercise details"}

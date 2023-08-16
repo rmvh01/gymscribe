@@ -1,6 +1,7 @@
 from fastapi import (
     APIRouter,
-    Depends
+    Depends,
+    HTTPException
 )
 
 from queries.exercise import ExerciseRepo, ExerciseIn, ExerciseOut
@@ -35,3 +36,15 @@ def delete_exercise(
     return repo.delete_exercise(
         exercise_id
     )
+
+
+@router.get("/api/exercise/{exercise_id}", response_model=ExerciseOut)
+def get_exercise_detail(
+    exercise_id: int,
+    repo: ExerciseRepo = Depends(),
+):
+    exercise = repo.get_exercise_by_id(exercise_id)
+    if exercise:
+        return exercise
+    else:
+        raise HTTPException(status_code=404, detail="Exercise not found")
