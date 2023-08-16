@@ -2,7 +2,6 @@ from fastapi import (
     APIRouter,
     Depends
 )
-from pydantic import BaseModel
 from queries.metrics import MetricRepo, MetricIn
 
 router = APIRouter()

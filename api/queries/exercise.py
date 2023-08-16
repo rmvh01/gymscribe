@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from queries.pool import pool
-from typing import List, Union
 
 
 class ExerciseIn(BaseModel):
@@ -14,7 +13,6 @@ class ExerciseOut(ExerciseIn):
     name: str
     description: str
     user_id: int
-
 
 
 class ExerciseRepo:
@@ -67,7 +65,7 @@ class ExerciseRepo:
         except Exception:
             return {"message": "cannot get all exercise"}
 
-    def delete_exercise(self, exercise_id:int):
+    def delete_exercise(self, exercise_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
