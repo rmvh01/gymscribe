@@ -15,6 +15,11 @@ class ExerciseOut(ExerciseIn):
     user_id: int
 
 
+class ExerciseUpdate(BaseModel):
+    name: str
+    description: str
+
+
 class ExerciseRepo:
     def create_exercise(
         self, exercise: ExerciseIn
@@ -104,3 +109,27 @@ class ExerciseRepo:
                         return None
         except Exception:
             return {"message": "Failed to fetch exercise details"}
+
+    def update_exercise(self, exercise_id: int, exercise: ExerciseUpdate):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        UPDATE exercises SET
+                            name = %s,
+                            description = %s
+                        WHERE id = %s;
+                        """,
+                        [
+                            exercise.name,
+                            exercise.description,
+                            exercise_id
+                        ],
+                    )
+                    if cur.rowcount:
+                        return {"message": "Exercise updated successfully!"}
+                    else:
+                        return None
+        except Exception:
+            return {"message": "Failed to update exercise"}

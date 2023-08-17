@@ -4,7 +4,9 @@ from fastapi import (
     HTTPException
 )
 
-from queries.exercise import ExerciseRepo, ExerciseIn, ExerciseOut
+from queries.exercise import (
+    ExerciseRepo, ExerciseIn, ExerciseOut, ExerciseUpdate
+)
 from typing import List
 
 
@@ -48,3 +50,18 @@ def get_exercise_detail(
         return exercise
     else:
         raise HTTPException(status_code=404, detail="Exercise not found")
+
+
+@router.put("/api/exercise/{exercise_id}", response_model=dict)
+def update_exercise(
+    exercise_id: int,
+    exercise: ExerciseUpdate,
+    repo: ExerciseRepo = Depends(),
+):
+    result = repo.update_exercise(exercise_id, exercise)
+    if result:
+        return result
+    else:
+        raise HTTPException(
+            status_code=404, detail="Exercise not found or update failed"
+            )
