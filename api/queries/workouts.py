@@ -27,7 +27,7 @@ class WorkoutUpdate(BaseModel):
     name: str
     description: str
     date: date
-    user_id:int
+    user_id: int
 
 
 class WorkoutRepo:
@@ -124,7 +124,6 @@ class WorkoutRepo:
         except Exception:
             return {"message": "Failed to get workout by ID"}
 
-
     def update_workout(self, workout_id: int, workout: WorkoutUpdate):
         try:
             with pool.connection() as conn:
@@ -132,7 +131,10 @@ class WorkoutRepo:
                     cur.execute(
                         '''
                         UPDATE workouts
-                        SET name = %s, description = %s, date = %s, user_id = %s
+                        SET name = %s,
+                          description = %s,
+                          date = %s,
+                          user_id = %s
                         WHERE id = %s;
                         ''',
                         [

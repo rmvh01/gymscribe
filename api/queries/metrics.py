@@ -13,6 +13,10 @@ class MetricOut(MetricIn):
     workout_id: int
 
 
+class MetricUpdate(MetricIn):
+    name: str
+
+
 class MetricRepo:
     def create_metric(
         self, metric: MetricIn
@@ -38,9 +42,7 @@ class MetricRepo:
                 old_data = metric.dict()
                 return MetricOut(id=id, **old_data)
 
-    def get_metrics(
-            self, metric: MetricIn
-    ):
+    def get_metrics(self):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -62,3 +64,47 @@ class MetricRepo:
                     return workout
         except Exception:
             return {"message": "cannot get all metrics"}
+
+    def get_metric_by_id(
+            self, metric_id: int
+    ):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT id, name, workout_id
+                        FROM metrics
+                        WHERE id = %s;
+                        """,
+                        [metric_id]
+                    )
+                    row = cur.fetchone()
+                    if row:
+                        return MetricOut(
+                            id=row[0],
+                            name=row[1],
+                            workout_id=row[2]
+                        )
+                    else:
+                        return None
+        except Exception:
+            return {"message: ": "failed to fetch metric details"}
+
+    def update_metric(self, metric_id: int, metric: MetricUpdate):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        UPDATE metrics SET
+                            name = %s
+                        """,
+                        [metric.name],
+                    )
+                    if cur.rowcount:
+                        return {"message": "metric updated successfully"}
+                    else:
+                        return None
+        except Exception:
+            return {"message": "failed to update metric name"}

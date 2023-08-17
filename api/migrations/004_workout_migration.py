@@ -7,7 +7,7 @@ steps = [
             name VARCHAR(100) NOT NULL UNIQUE,
             description TEXT NOT NULL,
             date DATE NOT NULL,
-            user_id INT REFERENCES users(id)
+            user_id INT REFERENCES users(id) ON DELETE CASCADE
         );
         """,
         # "Down" SQL statement

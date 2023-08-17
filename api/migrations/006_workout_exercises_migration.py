@@ -4,8 +4,8 @@ steps = [
         """
         CREATE TABLE workout_exercises (
             id SERIAL NOT NULL UNIQUE PRIMARY KEY,
-            workout_id INT REFERENCES workouts(id),
-            exercise_id INT REFERENCES exercises(id)
+            workout_id INT REFERENCES workouts(id) ON DELETE CASCADE,
+            exercise_id INT REFERENCES exercises(id) ON DELETE CASCADE
         );
         """,
         # "Down" SQL statement

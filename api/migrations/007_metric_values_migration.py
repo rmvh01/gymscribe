@@ -6,7 +6,7 @@ steps = [
             id SERIAL NOT NULL UNIQUE PRIMARY KEY,
             metric_id INT REFERENCES metrics(id),
             value INT NOT NULL,
-            exercise_id INT REFERENCES exercises(id)
+            exercise_id INT REFERENCES exercises(id) ON DELETE CASCADE
         );
         """,
         # "Down" SQL statement
