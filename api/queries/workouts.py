@@ -91,3 +91,28 @@ class WorkoutRepo:
                     return {"message": "Workout deleted successfully!"}
         except Exception:
             return {"message": "Failed to delete workout"}
+        
+    def get_workout_by_id(self, workout_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        '''
+                        SELECT id, name, description, exercises, date, user_id
+                        FROM workouts
+                        WHERE id = %s;
+                        ''',
+                        [workout_id],
+                    )
+                    row = cur.fetchone()
+                    if row:
+                        return WorkoutOut(
+                            id=row[0],
+                            name=row[1],
+                            description=row[2],
+                            exercises=row[3],
+                            date=row[4],
+                            user_id=row[5],
+                        )
+        except Exception:
+            return {"message": "Failed to get workout by ID"}

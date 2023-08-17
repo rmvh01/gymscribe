@@ -1,6 +1,7 @@
 from fastapi import (
     APIRouter,
-    Depends
+    Depends,
+    HTTPException
 )
 
 from queries.workouts import WorkoutRepo, WorkoutIn, WorkoutOut
@@ -35,3 +36,15 @@ def delete_workout(
     return repo.delete_exercise(
         workout_id
     )
+
+
+@router.get("/api/workout/{workout_id}", response_model=WorkoutOut)
+def get_workout_by_id(
+    workout_id: int,
+    repo: WorkoutRepo = Depends(),
+):
+    workout = repo.get_workout_by_id(workout_id)
+    if workout:
+        return workout
+    else:
+        raise HTTPException(status_code=404, detail="Workout not found")
