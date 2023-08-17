@@ -11,7 +11,7 @@ from typing import List
 router = APIRouter()
 
 
-@router.post("/api/workout_exercise", response_model=WorkoutExerciseOut)
+@router.post("/api/workout_exercise", response_model=WorkoutExerciseOut, tags=["Workout Exercises"])
 def add_exercise_to_workout(
     workout_exercise: WorkoutExerciseIn,
     repo: WorkoutExercisesRepo = Depends(),
@@ -25,7 +25,7 @@ def add_exercise_to_workout(
         )
 
 
-@router.get("/api/workout/{workout_id}/exercises", response_model=List[int])
+@router.get("/api/workout/{workout_id}/exercises", response_model=List[int], tags=["Workout Exercises"])
 def get_exercises_for_workout(
     workout_id: int,
     repo: WorkoutExercisesRepo = Depends(),
@@ -40,7 +40,7 @@ def get_exercises_for_workout(
         )
 
 
-@router.delete("/api/workout_exercise/{id}", response_model=dict)
+@router.delete("/api/workout_exercise/{id}", response_model=dict, tags=["Workout Exercises"])
 def remove_exercise_from_workout(
     id: int,
     repo: WorkoutExercisesRepo = Depends(),
