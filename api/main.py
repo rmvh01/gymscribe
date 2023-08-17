@@ -7,6 +7,7 @@ from routers import (
     exercise,
     metrics,
     workouts,
+    workout_exercises,
 )
 
 
@@ -17,6 +18,7 @@ app.include_router(accounts.router)
 app.include_router(exercise.router)
 app.include_router(metrics.router)
 app.include_router(workouts.router)
+app.include_router(workout_exercises.router)
 
 
 app.add_middleware(
