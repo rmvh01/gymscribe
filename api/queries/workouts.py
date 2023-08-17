@@ -23,6 +23,13 @@ class WorkoutOut(WorkoutIn):
     user_id: int
 
 
+class WorkoutUpdate(BaseModel):
+    name: str
+    description: str
+    date: date
+    user_id:int
+
+
 class WorkoutRepo:
     def create_workout(
         self, workout: WorkoutIn
@@ -91,7 +98,7 @@ class WorkoutRepo:
                     return {"message": "Workout deleted successfully!"}
         except Exception:
             return {"message": "Failed to delete workout"}
-        
+
     def get_workout_by_id(self, workout_id: int):
         try:
             with pool.connection() as conn:
@@ -116,3 +123,26 @@ class WorkoutRepo:
                         )
         except Exception:
             return {"message": "Failed to get workout by ID"}
+
+
+    def update_workout(self, workout_id: int, workout: WorkoutUpdate):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        '''
+                        UPDATE workouts
+                        SET name = %s, description = %s, date = %s, user_id = %s
+                        WHERE id = %s;
+                        ''',
+                        [
+                            workout.name,
+                            workout.description,
+                            workout.date,
+                            workout.user_id,
+                            workout_id,
+                        ],
+                    )
+                    return {"message": "Workout updated successfully!"}
+        except Exception:
+            return {"message": "Failed update workout"}

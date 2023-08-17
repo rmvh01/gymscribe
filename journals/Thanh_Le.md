@@ -14,3 +14,10 @@ August 15, 2023
 -colin schryer did the same and figured it out so I deleted my code and pull his
 
 
+August 16, 2023
+-work on the endpoint for exercise routers and queries
+-Eluron did the same so I didn't have to push my part
+
+August 17, 2023
+-working on the PUT for the workout routers and queries
+-make a class for updating workout 

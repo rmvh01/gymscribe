@@ -4,7 +4,12 @@ from fastapi import (
     HTTPException
 )
 
-from queries.workouts import WorkoutRepo, WorkoutIn, WorkoutOut
+from queries.workouts import (
+    WorkoutRepo,
+    WorkoutIn,
+    WorkoutOut,
+    WorkoutUpdate
+)
 from typing import List
 
 
@@ -48,3 +53,16 @@ def get_workout_by_id(
         return workout
     else:
         raise HTTPException(status_code=404, detail="Workout not found")
+
+
+@router.put("/api/workout/{workout_id}", response_model=dict)
+def update_workout(
+    workout_id: int,
+    workout: WorkoutUpdate,
+    repo: WorkoutRepo = Depends(),
+):
+    result = repo.update_workout(workout_id, workout)
+    if result:
+        return {"message": "Successfully update workout!"}
+    else:
+        raise HTTPException(status_code=500, detail="Failed workout update")
