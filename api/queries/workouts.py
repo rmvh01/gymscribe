@@ -132,9 +132,9 @@ class WorkoutRepo:
                         '''
                         UPDATE workouts
                         SET name = %s,
-                          description = %s,
-                          date = %s,
-                          user_id = %s
+                        description = %s,
+                        date = %s,
+                        user_id = %s
                         WHERE id = %s;
                         ''',
                         [
