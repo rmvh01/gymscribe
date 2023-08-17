@@ -23,14 +23,22 @@ def create_exercise(
     )
 
 
-@router.get("/api/exercise", response_model=List[ExerciseOut], tags=["Exercises"])
+@router.get(
+    "/api/exercise",
+    response_model=List[ExerciseOut],
+    tags=["Exercises"]
+)
 def get_exercise(
     repo: ExerciseRepo = Depends(),
 ):
     return repo.get_all_exercise()
 
 
-@router.delete("/api/exercise/{exercise_id}", response_model=dict, tags=["Exercises"])
+@router.delete(
+    "/api/exercise/{exercise_id}",
+    response_model=dict,
+    tags=["Exercises"]
+)
 def delete_exercise(
     exercise_id: int,
     repo: ExerciseRepo = Depends(),
@@ -40,7 +48,11 @@ def delete_exercise(
     )
 
 
-@router.get("/api/exercise/{exercise_id}", response_model=ExerciseOut, tags=["Exercises"])
+@router.get(
+    "/api/exercise/{exercise_id}",
+    response_model=ExerciseOut,
+    tags=["Exercises"]
+)
 def get_exercise_detail(
     exercise_id: int,
     repo: ExerciseRepo = Depends(),
@@ -52,7 +64,11 @@ def get_exercise_detail(
         raise HTTPException(status_code=404, detail="Exercise not found")
 
 
-@router.put("/api/exercise/{exercise_id}", response_model=dict, tags=["Exercises"])
+@router.put(
+    "/api/exercise/{exercise_id}",
+    response_model=dict,
+    tags=["Exercises"]
+)
 def update_exercise(
     exercise_id: int,
     exercise: ExerciseUpdate,

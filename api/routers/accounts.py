@@ -40,7 +40,11 @@ class UsersList(BaseModel):
 router = APIRouter()
 
 
-@router.post("/api/users", response_model=AccountToken | HttpError, tags=["Users"])
+@router.post(
+    "/api/users",
+    response_model=AccountToken | HttpError,
+    tags=["Users"]
+)
 async def create_user(
     info: UserIn,
     request: Request,

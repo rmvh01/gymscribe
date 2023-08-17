@@ -13,7 +13,11 @@ from typing import List
 router = APIRouter()
 
 
-@router.post("/api/metrics", response_model=MetricIn, tags=["Metrics"])
+@router.post(
+    "/api/metrics",
+    response_model=MetricIn,
+    tags=["Metrics"]
+)
 def create_metric(
     metric: MetricIn,
     repo: MetricRepo = Depends(),
@@ -23,14 +27,22 @@ def create_metric(
     )
 
 
-@router.get("/api/metric", response_model=List[MetricOut], tags=["Metrics"])
+@router.get(
+    "/api/metric",
+    response_model=List[MetricOut],
+    tags=["Metrics"]
+)
 def get_metrics(
     repo: MetricRepo = Depends(),
 ):
     return repo.get_metrics()
 
 
-@router.get("/api/metric/{metric_id}", response_model=MetricOut, tags=["Metrics"])
+@router.get(
+    "/api/metric/{metric_id}",
+    response_model=MetricOut,
+    tags=["Metrics"]
+)
 def get_metric_by_id(
     metric_id: int,
     repo: MetricRepo = Depends(),
@@ -42,7 +54,11 @@ def get_metric_by_id(
         raise HTTPException(status_code=404, detail="metric not found")
 
 
-@router.put("/api/metric/{metric_id}", response_model=dict, tags=["Metrics"])
+@router.put(
+    "/api/metric/{metric_id}",
+    response_model=dict,
+    tags=["Metrics"]
+)
 def update_metric_name(
     metric_id: int,
     metric: MetricUpdate,

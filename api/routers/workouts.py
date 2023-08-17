@@ -16,7 +16,11 @@ from typing import List
 router = APIRouter()
 
 
-@router.post("/api/workout", response_model=WorkoutIn, tags=["Workouts"])
+@router.post(
+    "/api/workout",
+    response_model=WorkoutIn,
+    tags=["Workouts"]
+)
 def create_workout(
     workout: WorkoutIn,
     repo: WorkoutRepo = Depends(),
@@ -26,14 +30,22 @@ def create_workout(
     )
 
 
-@router.get("/api/workout", response_model=List[WorkoutOut], tags=["Workouts"])
+@router.get(
+    "/api/workout",
+    response_model=List[WorkoutOut],
+    tags=["Workouts"]
+)
 def get_workout(
     repo: WorkoutRepo = Depends(),
 ):
     return repo.get_all_workouts()
 
 
-@router.delete("/api/workout/{workout_id}", response_model=dict, tags=["Workouts"])
+@router.delete(
+    "/api/workout/{workout_id}",
+    response_model=dict,
+    tags=["Workouts"]
+)
 def delete_workout(
     workout_id: int,
     repo: WorkoutRepo = Depends(),
@@ -43,7 +55,11 @@ def delete_workout(
     )
 
 
-@router.get("/api/workout/{workout_id}", response_model=WorkoutOut, tags=["Workouts"])
+@router.get(
+    "/api/workout/{workout_id}",
+    response_model=WorkoutOut,
+    tags=["Workouts"]
+)
 def get_workout_by_id(
     workout_id: int,
     repo: WorkoutRepo = Depends(),
@@ -55,7 +71,11 @@ def get_workout_by_id(
         raise HTTPException(status_code=404, detail="Workout not found")
 
 
-@router.put("/api/workout/{workout_id}", response_model=dict, tags=["Workouts"])
+@router.put(
+    "/api/workout/{workout_id}",
+    response_model=dict,
+    tags=["Workouts"]
+)
 def update_workout(
     workout_id: int,
     workout: WorkoutUpdate,
