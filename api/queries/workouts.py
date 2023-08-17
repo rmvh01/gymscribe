@@ -12,7 +12,6 @@ class ExerciseIds(BaseModel):
 class WorkoutIn(BaseModel):
     name: str
     description: str
-    exercises: ExerciseIds
     date: date
     user_id: int
 
@@ -21,7 +20,6 @@ class WorkoutOut(WorkoutIn):
     id: int
     name: str
     description: str
-    exercises: ExerciseIds
     date: date
     user_id: int
 
@@ -30,7 +28,6 @@ class WorkoutRepo:
     def create_workout(
         self, workout: WorkoutIn
     ):
-        exercises_json = json.dumps(workout.exercises.dict())
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -38,18 +35,16 @@ class WorkoutRepo:
                     INSERT INTO workouts
                         (name,
                         description,
-                        exercises,
                         date,
                         user_id
                         )
                     VALUES
-                    (%s, %s, %s::jsonb, %s, %s)
+                    (%s, %s, %s, %s)
                     RETURNING id;
                     """,
                     [
                         workout.name,
                         workout.description,
-                        exercises_json,
                         workout.date,
                         workout.user_id,
                     ],
@@ -64,7 +59,7 @@ class WorkoutRepo:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-                        SELECT id, name, description, exercises, date, user_id
+                        SELECT id, name, description, date, user_id
                         FROM workouts;
                         """,
                     )
@@ -74,9 +69,8 @@ class WorkoutRepo:
                             id=row[0],
                             name=row[1],
                             description=row[2],
-                            exercises=row[3],
-                            date=row[4],
-                            user_id=row[5],
+                            date=row[3],
+                            user_id=row[4],
                         )
                         for row in result
                     ]

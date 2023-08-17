@@ -4,13 +4,13 @@ from queries.pool import pool
 
 class MetricIn(BaseModel):
     name: str
-    value: int
+    workout_id: int
 
 
 class MetricOut(MetricIn):
     id: int
     name: str
-    value: int
+    workout_id: int
 
 
 class MetricRepo:
@@ -23,7 +23,7 @@ class MetricRepo:
                     """
                     INSERT INTO metrics
                         (name,
-                        value
+                        workout_id
                         )
                     VALUES
                     (%s, %s)
@@ -31,9 +31,34 @@ class MetricRepo:
                     """,
                     [
                         metric.name,
-                        metric.value,
+                        metric.workout_id,
                     ],
                 )
                 id = result.fetchone()[0]
                 old_data = metric.dict()
                 return MetricOut(id=id, **old_data)
+
+    def get_metrics(
+            self, metric: MetricIn
+    ):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT id, name, workout_id
+                        FROM metrics;
+                        """,
+                    )
+                    result = cur.fetchall()
+                    workout = [
+                        MetricOut(
+                            id=row[0],
+                            name=row[1],
+                            workout_id=row[2],
+                        )
+                        for row in result
+                    ]
+                    return workout
+        except Exception:
+            return {"message": "cannot get all metrics"}

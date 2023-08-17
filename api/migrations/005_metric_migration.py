@@ -4,8 +4,7 @@ steps = [
         """
         CREATE TABLE metrics (
             id SERIAL NOT NULL UNIQUE PRIMARY KEY,
-            name VARCHAR(100) NOT NULL UNIQUE,
-            values JSONB NOT NULL,
+            name VARCHAR(100) NOT NULL,
             workout_id INT REFERENCES workouts(id)
         );
         """,
