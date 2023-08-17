@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from typing import List
 from queries.pool import pool
 from datetime import date
-import json
 
 
 class ExerciseIds(BaseModel):
