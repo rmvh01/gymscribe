@@ -1,46 +1,48 @@
-import React, { useState } from "react";
+import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useState } from "react";
 
-function Login() {
+const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const { login } = useToken();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Make a POST request to the backend to authenticate the user
-    // Handle the response and update the UI accordingly
-    // Set the errorMessage state if there's an error
+    login(username, password);
+    e.target.reset();
   };
 
   return (
-    <div className="login">
-      <h2>Login</h2>
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+    <div className="card text-bg-light mb-3">
+      <h5 className="card-header">Login</h5>
+      <div className="card-body">
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div className="mb-3">
+            <label className="form-label">Username:</label>
+            <input
+              name="username"
+              type="text"
+              className="form-control"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Password:</label>
+            <input
+              name="password"
+              type="password"
+              className="form-control"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <input className="btn btn-primary" type="submit" value="Login" />
+          </div>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
-export default Login;
+export default LoginForm;

@@ -99,3 +99,28 @@ def update_user(
 def delete_user(id: int, repo: UserRepo = Depends()):
     repo.delete_user(id)
     return True
+
+
+@router.post("/api/login", response_model=AccountToken | HttpError)
+async def login(
+    form: UserForm,
+    request: Request,
+    response: Response,
+    repo: UserRepo = Depends(),
+):
+    # Fetch user details using the authenticator
+    user = await authenticator.get_account_data(form.email, repo)
+
+    if user:
+        # Get hashed password using the authenticator
+        hashed_password = authenticator.get_hashed_password(user)
+
+        if authenticator.verify_password(form.password, hashed_password):
+            token = await authenticator.create_token_for_user(user)
+            return AccountToken(user=user, **token.dict())
+
+    # If the user details are not found or password verification fails
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid email or password",
+    )
