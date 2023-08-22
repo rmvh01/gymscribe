@@ -13,6 +13,10 @@ class MetricOut(MetricIn):
     workout_id: int
 
 
+class FilteredMetricOut(BaseModel):
+    name: str
+
+
 class MetricUpdate(MetricIn):
     name: str
 
@@ -53,7 +57,7 @@ class MetricRepo:
                         """,
                     )
                     result = cur.fetchall()
-                    workout = [
+                    metric = [
                         MetricOut(
                             id=row[0],
                             name=row[1],
@@ -61,7 +65,7 @@ class MetricRepo:
                         )
                         for row in result
                     ]
-                    return workout
+                    return metric
         except Exception:
             return {"message": "cannot get all metrics"}
 
@@ -108,3 +112,23 @@ class MetricRepo:
                         return None
         except Exception:
             return {"message": "failed to update metric name"}
+
+    def get_filtered_metrics(self, workout_id):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT name, id
+                        FROM metrics
+                        WHERE workout_id = %s;
+                        """,
+                        [workout_id]
+                        )
+                    result = cur.fetchall()
+                    metric = []
+                    for row in result:
+                        metric.append((row[0], row[1]))
+                    return metric
+        except Exception:
+            return {"message": "cannot get all metrics"}

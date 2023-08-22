@@ -5,15 +5,19 @@ from fastapi import (
 )
 
 from queries.exercise import (
-    ExerciseRepo, ExerciseIn, ExerciseOut, ExerciseUpdate
+    ExerciseRepo, ExerciseIn, ExerciseOut, ExerciseUpdate, Error
 )
-from typing import List
+from typing import List, Union
 
 
 router = APIRouter()
 
 
-@router.post("/api/exercise", response_model=ExerciseIn, tags=["Exercises"])
+@router.post(
+        "/api/exercise",
+        response_model=ExerciseIn,
+        tags=["Exercises"]
+)
 def create_exercise(
     exercise: ExerciseIn,
     repo: ExerciseRepo = Depends(),
@@ -25,7 +29,7 @@ def create_exercise(
 
 @router.get(
     "/api/exercise",
-    response_model=List[ExerciseOut],
+    response_model=Union[List[ExerciseOut], Error],
     tags=["Exercises"]
 )
 def get_exercise(

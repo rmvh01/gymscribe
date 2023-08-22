@@ -1,3 +1,5 @@
+from pydantic import BaseModel
+from datetime import date
 from fastapi import (
     APIRouter,
     Depends,
@@ -10,7 +12,24 @@ from queries.workouts import (
     WorkoutOut,
     WorkoutUpdate
 )
+
+from queries.metrics import MetricRepo
+from queries.metric_values import MetricValueRepo
+from queries.workout_exercises import WorkoutExercisesRepo
+from queries.exercise import ExerciseRepo
+
 from typing import List
+
+
+class TotalWorkoutOut(BaseModel):
+    id: int
+    name: str
+    description: str
+    date: date
+    user_id: int
+    metrics: list
+    exercises: list
+    metric_values: list
 
 
 router = APIRouter()
@@ -33,7 +52,7 @@ def create_workout(
 @router.get(
     "/api/workout",
     response_model=List[WorkoutOut],
-    tags=["Workouts"]
+    tags=["Workouts"],
 )
 def get_workout(
     repo: WorkoutRepo = Depends(),
@@ -57,16 +76,71 @@ def delete_workout(
 
 @router.get(
     "/api/workout/{workout_id}",
-    response_model=WorkoutOut,
+    response_model=TotalWorkoutOut,
     tags=["Workouts"]
 )
 def get_workout_by_id(
     workout_id: int,
-    repo: WorkoutRepo = Depends(),
+    metric_repo: MetricRepo = Depends(),
+    workout_repo: WorkoutRepo = Depends(),
+    metric_value_repo: MetricValueRepo = Depends(),
+    workout_exercises_repo: WorkoutExercisesRepo = Depends(),
+    exercises_repo: ExerciseRepo = Depends(),
 ):
-    workout = repo.get_workout_by_id(workout_id)
-    if workout:
-        return workout
+    '''
+    This function uses most of our tables to build an instance
+    of a workout with ALL of its data.
+
+    It works by querying each table for the relevant data,
+    then that data is formatted according to the response model,
+    finally that data is combined with the "complete_workout" dict.
+    '''
+    # Query workout table, format, then add to new dict
+    complete_workout = dict(workout_repo.get_workout_by_id(workout_id))
+
+    # Query/formatting for metric names
+    metric_names = {
+        "metrics":
+        [val[0] for val in metric_repo.get_filtered_metrics(workout_id)]
+    }
+    complete_workout.update(metric_names)
+
+    # query exercise ids so I can query names using the ids
+    exercise_ids = workout_exercises_repo.get_exercises_for_workout(workout_id)
+    # query and formatting done here for exercise names
+    exercise_names = {
+        "exercises":
+        [exercises_repo.get_exercise_by_id(e_id).name for e_id in exercise_ids]
+    }
+    complete_workout.update(exercise_names)
+
+    # Query all the metric values
+    all_values = metric_value_repo.get_all_metric_values()
+    # Query metric_ids
+    metric_ids = [
+        val[1] for val in metric_repo.get_filtered_metrics(workout_id)
+    ]
+    # Use all values and the exercise id's to filter once
+    filtered_by_exercise = [
+        v for v in all_values if v.exercise_id in exercise_ids
+    ]
+    # use metric id's to filter again
+    heavily_filtered_values = [
+        (
+            v.id,
+            v.value,
+            metric_repo.get_metric_by_id(v.id).name,
+            exercises_repo.get_exercise_by_id(v.exercise_id).name
+        )
+        for v in filtered_by_exercise
+        if v.metric_id in metric_ids
+    ]
+    # use the results of the above comprehension to format the data
+    values = {"metric_values": heavily_filtered_values}
+    complete_workout.update(values)
+
+    if complete_workout:
+        return complete_workout
     else:
         raise HTTPException(status_code=404, detail="Workout not found")
 
