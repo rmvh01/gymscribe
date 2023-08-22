@@ -40,7 +40,11 @@ class UsersList(BaseModel):
 router = APIRouter()
 
 
-@router.post("/api/users", response_model=AccountToken | HttpError)
+@router.post(
+    "/api/users",
+    response_model=AccountToken | HttpError,
+    tags=["Users"]
+)
 async def create_user(
     info: UserIn,
     request: Request,
@@ -60,7 +64,7 @@ async def create_user(
     return AccountToken(user=account, **token.dict())
 
 
-@router.get("/api/users", response_model=UsersList)
+@router.get("/api/users", response_model=UsersList, tags=["Users"])
 def get_users(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: UserRepo = Depends(),
@@ -68,7 +72,7 @@ def get_users(
     return {"users": repo.get_users(account_data.get("id"))}
 
 
-@router.get("/api/users/{id}", response_model=UserOut)
+@router.get("/api/users/{id}", response_model=UserOut, tags=["Users"])
 def get_user(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: UserRepo = Depends(),
@@ -80,7 +84,7 @@ def get_user(
         raise HTTPException(status_code=404, detail="User not found")
 
 
-@router.put("/api/users/{id}", response_model=UserOut)
+@router.put("/api/users/{id}", response_model=UserOut, tags=["Users"])
 def update_user(
     id: int,
     account_data: dict = Depends(authenticator.get_current_account_data),
@@ -95,7 +99,7 @@ def update_user(
     return updated_user_record
 
 
-@router.delete("/api/users/{id}", response_model=bool)
+@router.delete("/api/users/{id}", response_model=bool, tags=["Users"])
 def delete_user(id: int, repo: UserRepo = Depends()):
     repo.delete_user(id)
     return True
