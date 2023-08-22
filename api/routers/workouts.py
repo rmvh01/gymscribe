@@ -95,30 +95,36 @@ def get_workout_by_id(
     then that data is formatted according to the response model,
     finally that data is combined with the "complete_workout" dict.
     '''
+    # Query workout table, format, then add to new dict
     complete_workout = dict(workout_repo.get_workout_by_id(workout_id))
+
+    # Query/formatting for metric names
     metric_names = {
         "metrics":
         [val[0] for val in metric_repo.get_filtered_metrics(workout_id)]
     }
     complete_workout.update(metric_names)
 
+    # query exercise ids so I can query names using the ids
     exercise_ids = workout_exercises_repo.get_exercises_for_workout(workout_id)
-
+    # query and formatting done here for exercise names
     exercise_names = {
         "exercises":
         [exercises_repo.get_exercise_by_id(e_id).name for e_id in exercise_ids]
     }
     complete_workout.update(exercise_names)
 
+    # Query all the metric values
     all_values = metric_value_repo.get_all_metric_values()
+    # Query metric_ids
     metric_ids = [
         val[1] for val in metric_repo.get_filtered_metrics(workout_id)
     ]
-
+    # Use all values and the exercise id's to filter once
     filtered_by_exercise = [
         v for v in all_values if v.exercise_id in exercise_ids
     ]
-
+    # use metric id's to filter again
     heavily_filtered_values = [
         (
             v.id,
@@ -129,8 +135,8 @@ def get_workout_by_id(
         for v in filtered_by_exercise
         if v.metric_id in metric_ids
     ]
+    # use the results of the above comprehension to format the data
     values = {"metric_values": heavily_filtered_values}
-
     complete_workout.update(values)
 
     if complete_workout:
