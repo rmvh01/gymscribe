@@ -87,7 +87,14 @@ def get_workout_by_id(
     workout_exercises_repo: WorkoutExercisesRepo = Depends(),
     exercises_repo: ExerciseRepo = Depends(),
 ):
+    '''
+    This function uses most of our tables to build an instance
+    of a workout with ALL of its data.
 
+    It works by querying each table for the relevant data,
+    then that data is formatted according to the response model,
+    finally that data is combined with the "complete_workout" dict.
+    '''
     complete_workout = dict(workout_repo.get_workout_by_id(workout_id))
     metric_names = {
         "metrics":
