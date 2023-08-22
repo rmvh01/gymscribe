@@ -105,7 +105,7 @@ class WorkoutRepo:
                 with conn.cursor() as cur:
                     cur.execute(
                         '''
-                        SELECT id, name, description, exercises, date, user_id
+                        SELECT id, name, description, date, user_id
                         FROM workouts
                         WHERE id = %s;
                         ''',
@@ -117,9 +117,8 @@ class WorkoutRepo:
                             id=row[0],
                             name=row[1],
                             description=row[2],
-                            exercises=row[3],
-                            date=row[4],
-                            user_id=row[5],
+                            date=row[3],
+                            user_id=row[4],
                         )
         except Exception:
             return {"message": "Failed to get workout by ID"}

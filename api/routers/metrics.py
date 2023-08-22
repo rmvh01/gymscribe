@@ -30,7 +30,7 @@ def create_metric(
 @router.get(
     "/api/metric",
     response_model=List[MetricOut],
-    tags=["Metrics"]
+    tags=["Metrics"],
 )
 def get_metrics(
     repo: MetricRepo = Depends(),
