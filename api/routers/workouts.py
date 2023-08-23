@@ -17,7 +17,7 @@ from queries.metrics import MetricRepo
 from queries.metric_values import MetricValueRepo
 from queries.workout_exercises import WorkoutExercisesRepo
 from queries.exercise import ExerciseRepo
-
+from authenticator import authenticator
 from typing import List
 
 
@@ -42,10 +42,13 @@ router = APIRouter()
 )
 def create_workout(
     workout: WorkoutIn,
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: WorkoutRepo = Depends(),
 ):
+    print(account_data)
     return repo.create_workout(
-        workout
+        workout=workout,
+        user_id=account_data["id"]
     )
 
 

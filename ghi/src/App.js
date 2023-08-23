@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import SignUp from "./SignUp";
 import LoginForm from "./Login";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
-// import other components and dependencies as needed
+import LandingPage from "./users/LandingPage";
+import LoginLandingPageNewUser from "./workouts/CreateWorkout";
+import WorkoutForm from "./workouts/WorkoutForm";
+
 
 function App() {
   return (
@@ -18,7 +21,9 @@ function App() {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/" element={<div>Main App Here</div>} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/LandingPageNewUser" element={<LoginLandingPageNewUser />} />
+          <Route path="/WorkoutForm" element={<WorkoutForm />} />
         </Routes>
       </div>
     </Router>

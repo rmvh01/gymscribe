@@ -12,7 +12,6 @@ class WorkoutIn(BaseModel):
     name: str
     description: str
     date: date
-    user_id: int
 
 
 class WorkoutOut(WorkoutIn):
