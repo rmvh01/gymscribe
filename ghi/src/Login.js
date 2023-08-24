@@ -1,5 +1,4 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useState } from "react";
 
 const LoginForm = () => {

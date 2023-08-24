@@ -10,7 +10,7 @@ import WorkoutForm from "./workouts/WorkoutForm";
 
 function App() {
   return (
-    <AuthProvider>
+    <AuthProvider baseUrl="http://localhost:8000">
     <Router>
       <div className="app">
         <nav>

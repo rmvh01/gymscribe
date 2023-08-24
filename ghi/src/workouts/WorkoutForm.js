@@ -15,24 +15,24 @@ function WorkoutForm() {
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('description', description);
-        const date = new Date()
-        const year = String(date.getFullYear())
-        const month = Number(date.getMonth()) + 1
-        const monthStr = String(month).padStart(2, '0')
-        const day = String(date.getDate())
-        const formatted_date = `${year}-${monthStr}-${day}`
-        formData.append("date", formatted_date)
-        const workoutUrl = "http://localhost:8000/api/workout"
-        console.log(formData)
+        let data = {}
+        let date = new Date()
+        let year = String(date.getFullYear())
+        let month = Number(date.getMonth()) + 1
+        let monthStr = String(month).padStart(2, '0')
+        let day = String(date.getDate())
+        let formatted_date = `${year}-${monthStr}-${day}`
+        data.name = title
+        data.description = description
+        data.date = formatted_date
+        console.log(data)
+        const workoutUrl = "http://localhost:8000/api/workout/"
+        data = JSON.stringify(data)
         const fetchConfig = {
             method: "POST",
-            body: formData,
+            body: data,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,

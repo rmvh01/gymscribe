@@ -72,7 +72,7 @@ def delete_workout(
     workout_id: int,
     repo: WorkoutRepo = Depends(),
 ):
-    return repo.delete_exercise(
+    return repo.delete_workout(
         workout_id
     )
 

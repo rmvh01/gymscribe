@@ -31,7 +31,7 @@ class WorkoutUpdate(BaseModel):
 
 class WorkoutRepo:
     def create_workout(
-        self, workout: WorkoutIn
+        self, user_id, workout: WorkoutIn
     ):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -51,12 +51,12 @@ class WorkoutRepo:
                         workout.name,
                         workout.description,
                         workout.date,
-                        workout.user_id,
+                        user_id,
                     ],
                 )
                 id = result.fetchone()[0]
                 old_data = workout.dict()
-                return WorkoutOut(id=id, **old_data)
+                return WorkoutOut(id=id, user_id=user_id, **old_data)
 
     def get_all_workouts(self):
         try:
