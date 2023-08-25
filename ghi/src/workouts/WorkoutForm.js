@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useParams } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
-
 function WorkoutForm() {
+    const { workout_id } = useParams();
     const { token } = useToken();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');

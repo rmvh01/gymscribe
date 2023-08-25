@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.post(
-        "/api/exercise",
+        "/api/exercises",
         response_model=ExerciseIn,
         tags=["Exercises"]
 )
@@ -28,7 +28,7 @@ def create_exercise(
 
 
 @router.get(
-    "/api/exercise",
+    "/api/exercises",
     response_model=Union[List[ExerciseOut], Error],
     tags=["Exercises"]
 )
@@ -39,7 +39,7 @@ def get_exercise(
 
 
 @router.delete(
-    "/api/exercise/{exercise_id}",
+    "/api/exercises/{exercise_id}",
     response_model=dict,
     tags=["Exercises"]
 )
@@ -53,7 +53,7 @@ def delete_exercise(
 
 
 @router.get(
-    "/api/exercise/{exercise_id}",
+    "/api/exercises/{exercise_id}",
     response_model=ExerciseOut,
     tags=["Exercises"]
 )
@@ -69,7 +69,7 @@ def get_exercise_detail(
 
 
 @router.put(
-    "/api/exercise/{exercise_id}",
+    "/api/exercises/{exercise_id}",
     response_model=dict,
     tags=["Exercises"]
 )
