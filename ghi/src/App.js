@@ -24,7 +24,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/LandingPageNewUser" element={<LoginLandingPageNewUser />} />
           <Route path="">
-            <Route path=":workout_id" element={<ExercisesList />} />
+            <Route path="/workout/:workout_id" element={<ExercisesList />} />
             <Route path=":workout_id" element={<WorkoutForm />} />
           </Route>
           {/* <Route path="/WorkoutExercises" element={<ExercisesList />} /> */}

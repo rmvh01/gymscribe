@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+// import useToken from "@galvanize-inc/jwtdown-for-react"; // Uncomment if you use this
 
 function ExercisesList() {
   const [exercises, setExercises] = useState([]);
@@ -23,7 +23,9 @@ function ExercisesList() {
 
   const fetchWorkoutExercises = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/workout_exercise`);
+      const response = await fetch(
+        `http://localhost:8000/api/workout/${workout_id}/exercises`
+      );
       if (response.ok) {
         const jsonData = await response.json();
         setWorkoutExercises(jsonData);
@@ -35,31 +37,46 @@ function ExercisesList() {
     }
   };
 
- const postExerciseToWorkoutExercises = async (exerciseToAdd) => {
- //remove the exercise from exercise list
+  const postExerciseToWorkoutExercises = async (exerciseToAdd) => {
+    // Remove the exercise from exercise list
     setExercises((oldExercises) => {
-       const newExercises = oldExercises.filter((e) => e.id !== exerciseToAdd.id)
-       return newExercises
-    })
-    const url = "http://localhost:8000/api/workout_exercise/"
-    content = {
-        "workout_id": workout_id,
-        "exercise_id": exerciseToAdd.id}
-    const fetchConfig = {
-        method: 'POST',
-        body: content,
-        headers:{
-            'Content-Type':'application/json',
-        }
-    }
-    const response = await fetch(url,fetchConfig)
-    if(response.ok){
-        console.log(response.json(),"success!")
+      const newExercises = oldExercises.filter(
+        (e) => e.id !== exerciseToAdd.id
+      );
+      return newExercises;
+    });
 
-        setWorkoutExercises((oldWorkoutExercises) => {
-            const newWorkoutExercises = [...oldWorkoutExercises,exerciseToAdd.name]
-            return newWorkoutExercises
-        })}
+    const url = "http://localhost:8000/api/workout_exercise/";
+    const content = {
+      workout_id: workout_id,
+      exercise_id: exerciseToAdd.id,
+    };
+    console.log("Posting the following content:", content); // Added console.log
+    const fetchConfig = {
+      method: "POST",
+      body: JSON.stringify(content), // Stringify the content object
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(url, fetchConfig);
+    if (response.ok) {
+      console.log("Success!");
+      setWorkoutExercises((oldWorkoutExercises) => {
+
+        if (oldWorkoutExercises){
+
+
+        const newWorkoutExercises = [...oldWorkoutExercises, exerciseToAdd];
+        return newWorkoutExercises;
+        } else{
+          const newWorkoutExercises = [exerciseToAdd]
+
+          return newWorkoutExercises;
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -67,29 +84,6 @@ function ExercisesList() {
       fetchWorkoutExercises();
     }
   }, [workout_id]);
-
-//   const workoutUrl = "http://localhost:8000/api/workout_exercise/"
-//         data = JSON.stringify(data)
-//         const fetchConfig = {
-//             method: "POST",
-//             body: data,
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${token}`,
-//             }
-//         };
-//         const response = fetch(
-//             workoutUrl, fetchConfig
-//         );
-//         if (response.ok) {
-//             setExercises('');
-//             setWorkoutExercises('');
-//             console.log("Workout Created Successfully");
-//         }
-//         else {console.log("Workout could not be post")}
-//     };
-
-
 
   return (
     <div className="container mt-5 pt-1">
@@ -110,10 +104,12 @@ function ExercisesList() {
                     <td>{exercise.name}</td>
                     <td>{exercise.description}</td>
                     <td>
-                    <button
-                    onClick={() => postExerciseToWorkoutExercises(exercise)}
-                    className="btn btn-primary">
-                    </button>
+                      <button
+                        onClick={() => postExerciseToWorkoutExercises(exercise)}
+                        className="btn btn-primary"
+                      >
+                        Add
+                      </button>
                     </td>
                   </tr>
                 );
@@ -144,5 +140,6 @@ function ExercisesList() {
     </div>
   );
 }
-}
+
+
 export default ExercisesList;
