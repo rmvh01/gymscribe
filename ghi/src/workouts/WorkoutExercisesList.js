@@ -37,6 +37,7 @@ function ExercisesList() {
     }
   };
 
+
   const postExerciseToWorkoutExercises = async (exerciseToAdd) => {
     // Remove the exercise from exercise list
     setExercises((oldExercises) => {
@@ -63,15 +64,13 @@ function ExercisesList() {
     if (response.ok) {
       console.log("Success!");
       setWorkoutExercises((oldWorkoutExercises) => {
-
-        if (oldWorkoutExercises){
-
-
-        const newWorkoutExercises = [...oldWorkoutExercises, exerciseToAdd];
-        return newWorkoutExercises;
-        } else{
-          const newWorkoutExercises = [exerciseToAdd]
-
+        if (oldWorkoutExercises) {
+          console.log("aaaa")
+          const newWorkoutExercises = [...oldWorkoutExercises, content];
+          return newWorkoutExercises;
+        } else {
+          const newWorkoutExercises = [];
+          console.log('asdf')
           return newWorkoutExercises;
         }
       });
@@ -100,7 +99,7 @@ function ExercisesList() {
             {exercises &&
               exercises.map((exercise) => {
                 return (
-                  <tr key={exercise.id}>
+                  <tr key={exercise.id + exercise.name}>
                     <td>{exercise.name}</td>
                     <td>{exercise.description}</td>
                     <td>
@@ -126,11 +125,11 @@ function ExercisesList() {
           </thead>
           <tbody className="table-group-divider">
             {workoutExercises &&
-              workoutExercises.map((exercise) => {
+              workoutExercises.map((workoutExercises, index) => {
                 return (
-                  <tr key={exercise.id}>
-                    <td>{exercise.name}</td>
-                    <td>{exercise.description}</td>
+                  <tr key={"" + workoutExercises.exercise_id + index}>
+                    <td>{workoutExercises}</td>
+                    <td>{}</td>
                   </tr>
                 );
               })}
@@ -140,6 +139,5 @@ function ExercisesList() {
     </div>
   );
 }
-
 
 export default ExercisesList;
