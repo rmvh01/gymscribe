@@ -104,6 +104,7 @@ def delete_user(id: int, repo: UserRepo = Depends()):
     repo.delete_user(id)
     return True
 
+
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
