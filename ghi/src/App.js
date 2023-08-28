@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link, Routes, useParams } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Routes,
+  useParams,
+} from "react-router-dom";
 import SignUp from "./SignUp";
 import LoginForm from "./Login";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
@@ -9,29 +15,33 @@ import WorkoutForm from "./workouts/WorkoutForm";
 import ExercisesList from "./workouts/WorkoutExercisesList";
 
 function App() {
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
   return (
-    <AuthProvider baseUrl="http://localhost:8000">
-    <Router>
-      <div className="app">
-        <nav>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/">Home</Link>
-        </nav>
-        <Routes>
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/LandingPageNewUser" element={<LoginLandingPageNewUser />} />
-          <Route path="">
-            <Route path="/workout/:workout_id" element={<ExercisesList />} />
-            <Route path=":workout_id" element={<WorkoutForm />} />
-          </Route>
-          {/* <Route path="/WorkoutExercises" element={<ExercisesList />} /> */}
-
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
+      <Router basename={basename}>
+        <div className="app">
+          <nav>
+            <Link to="/signup">Sign Up</Link>
+            <Link to="/login">Login</Link>
+            <Link to="/">Home</Link>
+          </nav>
+          <Routes>
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/LandingPageNewUser"
+              element={<LoginLandingPageNewUser />}
+            />
+            <Route path="">
+              <Route path="/workout/:workout_id" element={<ExercisesList />} />
+              <Route path="/workout" element={<WorkoutForm />} />
+            </Route>
+            {/* <Route path="/WorkoutExercises" element={<ExercisesList />} /> */}
+          </Routes>
+        </div>
+      </Router>
     </AuthProvider>
   );
 }

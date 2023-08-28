@@ -37,7 +37,7 @@ router = APIRouter()
 
 @router.post(
     "/api/workout",
-    response_model=WorkoutIn,
+    response_model=WorkoutOut,
     tags=["Workouts"]
 )
 def create_workout(

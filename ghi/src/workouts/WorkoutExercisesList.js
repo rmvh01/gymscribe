@@ -9,7 +9,9 @@ function ExercisesList() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/exercises");
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOST}/api/exercises`
+      );
       if (response.ok) {
         const jsonData = await response.json();
         setExercises(jsonData);
@@ -24,7 +26,7 @@ function ExercisesList() {
   const fetchWorkoutExercises = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/workout/${workout_id}/exercises`
+        `${process.env.REACT_APP_API_HOST}/api/workout/${workout_id}/exercises`
       );
       if (response.ok) {
         const jsonData = await response.json();
@@ -37,7 +39,6 @@ function ExercisesList() {
     }
   };
 
-
   const postExerciseToWorkoutExercises = async (exerciseToAdd) => {
     // Remove the exercise from exercise list
     setExercises((oldExercises) => {
@@ -47,7 +48,7 @@ function ExercisesList() {
       return newExercises;
     });
 
-    const url = "http://localhost:8000/api/workout_exercise/";
+    const url = `${process.env.REACT_APP_API_HOST}/api/workout_exercise/"`;
     const content = {
       workout_id: workout_id,
       exercise_id: exerciseToAdd.id,
@@ -65,12 +66,12 @@ function ExercisesList() {
       console.log("Success!");
       setWorkoutExercises((oldWorkoutExercises) => {
         if (oldWorkoutExercises) {
-          console.log("aaaa")
+          console.log("aaaa");
           const newWorkoutExercises = [...oldWorkoutExercises, content];
           return newWorkoutExercises;
         } else {
           const newWorkoutExercises = [];
-          console.log('asdf')
+          console.log("asdf");
           return newWorkoutExercises;
         }
       });
