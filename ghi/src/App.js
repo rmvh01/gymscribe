@@ -13,6 +13,7 @@ import LandingPage from "./users/LandingPage";
 import LoginLandingPageNewUser from "./workouts/CreateWorkout";
 import WorkoutForm from "./workouts/WorkoutForm";
 import ExercisesList from "./workouts/WorkoutExercisesList";
+import CreateExercise from "./workouts/CreateExercise";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -37,6 +38,7 @@ function App() {
             <Route path="">
               <Route path="/workout/:workout_id" element={<ExercisesList />} />
               <Route path="/workout" element={<WorkoutForm />} />
+              <Route path="/exercises" element={<CreateExercise />} />
             </Route>
             {/* <Route path="/WorkoutExercises" element={<ExercisesList />} /> */}
           </Routes>

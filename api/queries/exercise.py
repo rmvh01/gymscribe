@@ -9,7 +9,6 @@ class Error(BaseModel):
 class ExerciseIn(BaseModel):
     name: str
     description: str
-    user_id: int
 
 
 class ExerciseOut(ExerciseIn):
@@ -26,7 +25,7 @@ class ExerciseUpdate(BaseModel):
 
 class ExerciseRepo:
     def create_exercise(
-        self, exercise: ExerciseIn
+        self, user_id, exercise: ExerciseIn
     ):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -43,12 +42,12 @@ class ExerciseRepo:
                     [
                         exercise.name,
                         exercise.description,
-                        exercise.user_id,
+                        user_id,
                     ],
                 )
                 id = result.fetchone()[0]
                 old_data = exercise.dict()
-                return ExerciseOut(id=id, **old_data)
+                return ExerciseOut(id=id, user_id=user_id, **old_data)
 
     def get_all_exercise(self):
         try:

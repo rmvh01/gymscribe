@@ -8,6 +8,7 @@ from queries.exercise import (
     ExerciseRepo, ExerciseIn, ExerciseOut, ExerciseUpdate, Error
 )
 from typing import List, Union
+from authenticator import authenticator
 
 
 router = APIRouter()
@@ -20,10 +21,12 @@ router = APIRouter()
 )
 def create_exercise(
     exercise: ExerciseIn,
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: ExerciseRepo = Depends(),
 ):
     return repo.create_exercise(
-        exercise
+        exercise=exercise,
+        user_id=account_data["id"]
     )
 
 
