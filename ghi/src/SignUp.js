@@ -5,6 +5,7 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,15 +28,14 @@ function SignUp() {
       const data = await response.json();
 
       if (response.ok) {
-        // Registration was successful
-        // You can redirect the user or perform other actions
+        setSignUpSuccess(true);
         console.log("Registration successful:", data);
       } else {
-        // Handle errors from the backend
+        setSignUpSuccess(false);
         setErrorMessage(data.error || "An error occurred during registration.");
       }
     } catch (error) {
-      // Handle other errors like network issues
+      setSignUpSuccess(false);
       setErrorMessage("An error occurred. Please try again later.");
     }
   };
@@ -43,6 +43,7 @@ function SignUp() {
   return (
     <div className="sign-up">
       <h2>Sign Up</h2>
+      {signUpSuccess && <p className="text-success">Sign-up was successful!</p>}
       {errorMessage && <p className="error">{errorMessage}</p>}
       <form onSubmit={handleSubmit}>
         <div>

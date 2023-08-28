@@ -4,11 +4,18 @@ import { useState } from "react";
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const { login } = useToken();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(username, password);
+    try {
+      await login(username, password); // Assuming login returns a promise
+      setLoginSuccess(true);
+    } catch (error) {
+      console.error("Login failed:", error);
+      setLoginSuccess(false);
+    }
     e.target.reset();
   };
 
@@ -39,6 +46,7 @@ const LoginForm = () => {
             <input className="btn btn-primary" type="submit" value="Login" />
           </div>
         </form>
+        {loginSuccess && <p className="text-success">Login was successful!</p>}
       </div>
     </div>
   );
