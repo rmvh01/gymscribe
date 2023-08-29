@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react"; // Uncomment if you use this
 
 // we need:
@@ -9,6 +9,7 @@ import useToken from "@galvanize-inc/jwtdown-for-react"; // Uncomment if you use
 function WorkoutExercisesList() {
   // const token, and useState for (exercises not in workout) and one for (exercises in the workout)
   const { token } = useToken();
+  const navigate = useNavigate();
   const { workout_id } = useParams();
   const [exercisesNotInWorkout, setExercisesNotInWorkout] = useState([]);
   const [exercisesInWorkout, setExercisesInWorkout] = useState([]);
@@ -21,18 +22,14 @@ function WorkoutExercisesList() {
   const fetchData = async () => {
     const filteredExerciseData = await fetchExerciseData();
     const exerciseIdList = await fetchWorkoutExerciseIds(workout_id);
-    console.log(exerciseIdList);
     const exercisesIn = [];
     const exercisesOut = [];
-    console.log(filteredExerciseData);
     for (let exercise of filteredExerciseData) {
       if (exerciseIdList.includes(exercise.id)) {
         exercisesIn.push(exercise);
       } else {
         exercisesOut.push(exercise);
       }
-      console.log(exercisesOut);
-      console.log(exercisesIn);
       setExercisesInWorkout(exercisesIn);
       setExercisesNotInWorkout(exercisesOut);
     }
@@ -72,15 +69,12 @@ function WorkoutExercisesList() {
         const exercisesJson = await exercisesResponse.json();
         // fitler that json for user_id
         const user_id = await fetchUserId();
-        console.log(exercisesJson);
         const newExercises = [];
         for (let exercise of exercisesJson) {
-          console.log(user_id);
           if (exercise.user_id === user_id) {
             newExercises.push(exercise);
           }
         }
-        console.log(newExercises);
         return newExercises; // these are only the user's exercises
       }
     } catch {
@@ -113,7 +107,6 @@ function WorkoutExercisesList() {
       workout_id: newWorkoutId,
     };
     const data = JSON.stringify(content);
-    console.log("content", content);
     const fetchConfig = {
       method: "POST",
       body: data,
@@ -125,9 +118,34 @@ function WorkoutExercisesList() {
     const response = await fetch(url, fetchConfig);
     if (response.ok) {
       console.log("Exercise posted to workout_exercises table");
-      setForceRefresh(true);
+      if (forceRefresh) {
+        setForceRefresh(false);
+      } else {
+        setForceRefresh(true);
+      }
     } else {
       console.log("exercise could not be posted");
+    }
+  };
+
+  const removeExerciseFromWorkout = async (exercise) => {
+    const newWorkoutId = parseInt(workout_id);
+    const url = `${process.env.REACT_APP_API_HOST}/api/${newWorkoutId}/${exercise.id}`;
+    const fetchConfig = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await fetch(url, fetchConfig);
+    if (response.ok) {
+      console.log("exercise removed from workout");
+      if (forceRefresh) {
+        setForceRefresh(false);
+      } else {
+        setForceRefresh(true);
+      }
     }
   };
 
@@ -158,6 +176,9 @@ function WorkoutExercisesList() {
             ))}
           </tbody>
         </table>
+        <button onClick={() => navigate("/exercises")}>
+          Create an Exercise
+        </button>
         <h1 className="text-center mb-3">Exercises In Workout</h1>
         <table className="table">
           <thead>
@@ -171,10 +192,18 @@ function WorkoutExercisesList() {
               <tr key={exercise.id}>
                 <td>{exercise.name}</td>
                 <td>{exercise.description}</td>
+                <td>
+                  <button onClick={() => removeExerciseFromWorkout(exercise)}>
+                    Remove
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <button onClick={() => navigate(`/workout/${workout_id}/metrics`)}>
+          Define Metrics
+        </button>
       </div>
     </div>
   );
