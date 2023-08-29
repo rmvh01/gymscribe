@@ -8,7 +8,7 @@ function ShowOneWorkout() {
 
   const fetchData = async () => {
     const newWorkoutId = parseInt(workout_id);
-    const url = `${process.env.REACT_APP_API_HOST}/workout/${workout_id}`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/workout/${workout_id}`;
     const response = await fetch(url);
     const json = await response.json();
     console.log(json);
