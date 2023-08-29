@@ -28,13 +28,6 @@ function WorkoutForm() {
     data.description = description;
     data.date = formatted_date;
 
-    const allWorkoutsUrl = `${process.env.REACT_APP_API_HOST}/api/workout`;
-    const allWorkoutsResponse = await fetch(allWorkoutsUrl);
-    const allWorkoutsData = await allWorkoutsResponse.json();
-    const num_workouts = allWorkoutsData.length + 1;
-    console.log(allWorkoutsData.length);
-
-    const workout_id = num_workouts;
     console.log(data);
     const workoutUrl = `${process.env.REACT_APP_API_HOST}/api/workout`;
     data = JSON.stringify(data);
@@ -48,10 +41,13 @@ function WorkoutForm() {
     };
     const response = await fetch(workoutUrl, fetchConfig);
     if (response.ok) {
+      const workout = await response.json();
+      const workoutId = workout.id;
+      console.log(workoutId);
       setTitle("");
       setDescription("");
       console.log("Workout Created Successfully");
-      navigate(`/workout/${workout_id}`);
+      navigate(`/workout/${workoutId}`);
     } else {
       console.log("Workout could not be post");
     }

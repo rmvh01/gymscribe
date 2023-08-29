@@ -40,13 +40,15 @@ def get_exercises_for_workout(
     workout_id: int,
     repo: WorkoutExercisesRepo = Depends(),
 ):
-    exercises = repo.get_exercises_for_workout(workout_id)
-    if exercises:
-        return exercises
-    else:
+    try:
+        exercises = repo.get_exercises_for_workout(workout_id)
+        if exercises:
+            return exercises
+        else:
+            return []
+    except Exception:
         raise HTTPException(
-            status_code=404,
-            detail="Workout not found or no exercises associated."
+            status_code=404, detail="Workout does not exist"
         )
 
 
