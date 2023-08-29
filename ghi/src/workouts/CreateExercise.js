@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate} from 'react-router-dom';
 
 
 function CreateExercise() {
     const { token } = useToken();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const navigate = useNavigate();
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -54,6 +56,7 @@ function CreateExercise() {
             </div>
             <button type="submit">Create Exercise</button>
         </form>
+        <button onClick={()=>navigate(-1)}>Back to Workout</button>
     </div>
     )
 }
