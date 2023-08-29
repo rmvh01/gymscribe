@@ -15,6 +15,8 @@ import WorkoutForm from "./workouts/WorkoutForm";
 import ExercisesList from "./workouts/WorkoutExercisesList";
 import CreateExercise from "./workouts/CreateExercise";
 import CreateMetric from "./workouts/CreateMetric";
+import WorkoutListView from "./workouts/WorkoutListView";
+import EditWorkoutForm from "./workouts/UpdateWorkoutForm";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -41,6 +43,9 @@ function App() {
               <Route path="/workout" element={<WorkoutForm />} />
               <Route path="/exercises" element={<CreateExercise />} />
               <Route path="/workout/:workout_id/metrics" element={<CreateMetric />} />
+              <Route path="/workout/list" element={<WorkoutListView />} />
+              <Route path="/workoutform/:workout_id" element={<EditWorkoutForm />} />
+
             </Route>
             {/* <Route path="/WorkoutExercises" element={<ExercisesList />} /> */}
           </Routes>
