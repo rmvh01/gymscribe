@@ -10,6 +10,8 @@ from queries.metrics import (
     MetricUpdate
 )
 from typing import List
+
+
 router = APIRouter()
 
 
@@ -23,7 +25,7 @@ def create_metric(
     repo: MetricRepo = Depends(),
 ):
     return repo.create_metric(
-        metric
+        metric=metric
     )
 
 
