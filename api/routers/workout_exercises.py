@@ -20,7 +20,9 @@ def add_exercise_to_workout(
     workout_exercise: WorkoutExerciseIn,
     repo: WorkoutExercisesRepo = Depends(),
 ):
-    result = repo.add_exercise_to_workout(workout_exercise)
+    result = repo.add_exercise_to_workout(
+        workout_exercise=workout_exercise,
+        )
     if result:
         return result
     else:
@@ -49,15 +51,16 @@ def get_exercises_for_workout(
 
 
 @router.delete(
-    "/api/workout_exercise/{id}",
+    "/api/{workout_id}/{exercise_id}",
     response_model=dict,
     tags=["Workout Exercises"]
 )
 def remove_exercise_from_workout(
-    id: int,
+    workout_id: int,
+    exercise_id: int,
     repo: WorkoutExercisesRepo = Depends(),
 ):
-    result = repo.remove_exercise_from_workout(id)
+    result = repo.remove_exercise_from_workout(workout_id, exercise_id)
     if result:
         return result
     else:
