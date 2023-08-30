@@ -18,6 +18,7 @@ import CreateMetric from "./workouts/CreateMetric";
 import WorkoutListView from "./workouts/WorkoutListView";
 import EditWorkoutForm from "./workouts/UpdateWorkoutForm";
 import ShowOneWorkout from "./workouts/ShowOneWorkout";
+import ProfilePage from "./users/ProfilePage";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -34,6 +35,7 @@ function App() {
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/" element={<WorkoutListView />} />
             <Route
               path="/LandingPageNewUser"
