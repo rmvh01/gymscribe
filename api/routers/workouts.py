@@ -102,7 +102,8 @@ def get_workout_by_id(
 
     metric_names = {
         "metrics":
-        [{"id": val["id"], "name": val["name"]} for val in metric_repo.get_filtered_metrics(workout_id)]
+        [{"id": val["id"], "name": val["name"]}
+            for val in metric_repo.get_filtered_metrics(workout_id)]
     }
     complete_workout.update(metric_names)
 
@@ -111,7 +112,8 @@ def get_workout_by_id(
     # query and formatting done here for exercise names
     exercise_names = {
         "exercises":
-        [{"name": exercises_repo.get_exercise_by_id(e_id).name,"id": e_id} for e_id in exercise_ids]
+        [{"name": exercises_repo.get_exercise_by_id(e_id).name, "id": e_id}
+            for e_id in exercise_ids]
     }
     complete_workout.update(exercise_names)
 

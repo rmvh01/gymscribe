@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function ShowOneWorkout() {
   const { workout_id } = useParams();
   const [workoutdata, setWorkoutData] = useState({});
-  const navigate = useNavigate();
 
   const fetchData = async () => {
     const newWorkoutId = parseInt(workout_id);
@@ -14,7 +14,6 @@ function ShowOneWorkout() {
     console.log(json);
     setWorkoutData(json);
     console.log(workoutdata.metrics);
-    setWorkoutData(json);
   };
 
   useEffect(() => {
@@ -58,5 +57,4 @@ function ShowOneWorkout() {
     </div>
   );
 }
-
 export default ShowOneWorkout;
