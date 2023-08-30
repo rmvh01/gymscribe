@@ -126,9 +126,10 @@ class MetricRepo:
                         [workout_id]
                         )
                     result = cur.fetchall()
-                    metric = []
+                    metrics = []
                     for row in result:
-                        metric.append((row[0], row[1]))
-                    return metric
+                        metric_name, metric_id = row
+                        metrics.append({"id": metric_id, "name": metric_name})
+                    return metrics
         except Exception:
             return {"message": "cannot get all metrics"}

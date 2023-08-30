@@ -100,10 +100,9 @@ def get_workout_by_id(
     # Query workout table, format, then add to new dict
     complete_workout = dict(workout_repo.get_workout_by_id(workout_id))
 
-    # Query/formatting for metric names
     metric_names = {
         "metrics":
-        [val[0] for val in metric_repo.get_filtered_metrics(workout_id)]
+        [{"id": val["id"], "name": val["name"]} for val in metric_repo.get_filtered_metrics(workout_id)]
     }
     complete_workout.update(metric_names)
 
@@ -112,7 +111,7 @@ def get_workout_by_id(
     # query and formatting done here for exercise names
     exercise_names = {
         "exercises":
-        [exercises_repo.get_exercise_by_id(e_id).name for e_id in exercise_ids]
+        [{"name": exercises_repo.get_exercise_by_id(e_id).name,"id": e_id} for e_id in exercise_ids]
     }
     complete_workout.update(exercise_names)
 
@@ -120,7 +119,7 @@ def get_workout_by_id(
     all_values = metric_value_repo.get_all_metric_values()
     # Query metric_ids
     metric_ids = [
-        val[1] for val in metric_repo.get_filtered_metrics(workout_id)
+        val["id"] for val in metric_repo.get_filtered_metrics(workout_id)
     ]
     # Use all values and the exercise id's to filter once
     filtered_by_exercise = [
