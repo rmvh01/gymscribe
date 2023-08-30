@@ -33,7 +33,6 @@ function WorkoutListView() {
   }, []);
 
   useEffect(() => {
-    // Fetch all exercises associated with the user
     const fetchExercises = async () => {
       try {
         const response = await fetch(
@@ -58,6 +57,7 @@ function WorkoutListView() {
     <div className="container">
       <div className="workout-section">
         <h1>Workout List</h1>
+        <button onClick={() => navigate("/workout")}>Create Workout</button>
         <table>
           <thead>
             <tr>

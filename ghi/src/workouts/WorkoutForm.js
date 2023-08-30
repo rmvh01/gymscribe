@@ -66,6 +66,7 @@ function WorkoutForm() {
         </div>
         <button type="submit">Create/Select Exercises</button>
       </form>
+      <button onClick={() => navigate(-1)}>Back</button>
     </div>
   );
 }
