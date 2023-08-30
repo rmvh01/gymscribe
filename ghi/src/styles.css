@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.workout-section,
+.exercise-section,
+.exercises-not-in-workout-section,
+.exercises-in-workout-section {
+  flex: 1;
+  margin: 20px;
+  text-align: center;
+  min-width: 0;
+}
+
+table {
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
