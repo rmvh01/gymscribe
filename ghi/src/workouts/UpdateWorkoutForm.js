@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import "../styles.css";
 
 function EditWorkoutForm() {
   const { token } = useToken();
@@ -65,26 +66,34 @@ function EditWorkoutForm() {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input
-          type="text"
-          value={workout.name}
-          onChange={(e) => setWorkout({ ...workout, name: e.target.value })}
-        />
-      </label>
-      <label>
-        Description:
-        <textarea
-          value={workout.description}
-          onChange={(e) =>
-            setWorkout({ ...workout, description: e.target.value })
-          }
-        />
-      </label>
-      <button type="submit">Update</button>
-    </form>
+    <div className="container">
+      <div className="workout-section">
+        <h1 className="text-center mb-3">Edit Existing Workout</h1>
+        <form onSubmit={handleSubmit} id="Edit_Workout_Form">
+          <div>
+            <label>Name Your Workout:</label>
+            <input
+              type="text"
+              value={workout.name}
+              onChange={(e) => setWorkout({ ...workout, name: e.target.value })}
+              required
+            />
+          </div>
+          <div>
+            <label>Describe your Workout:</label>
+            <textarea
+              value={workout.description}
+              onChange={(e) =>
+                setWorkout({ ...workout, description: e.target.value })
+              }
+              required
+            />
+          </div>
+          <button type="submit">Update</button>
+        </form>
+      </div>
+      <button onClick={() => navigate(-1)}>Back</button>
+    </div>
   );
 }
 

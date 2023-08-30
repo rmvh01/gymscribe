@@ -44,7 +44,7 @@ function CreateExercise() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} id="Create Workout Form">
+      <form onSubmit={handleSubmit} id="Create_Workout_Form">
         <div>
           <label>Name your exercise:</label>
           <input type="text" value={name} onChange={handleNameChange} />
