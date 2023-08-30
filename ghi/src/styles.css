@@ -132,6 +132,17 @@ thead th {
   background-color: #f2f2f2;
 }
 
+.workout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 .profile-image {
   width: 200px;
   height: 200px;
