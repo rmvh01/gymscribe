@@ -10,12 +10,15 @@ function ProfilePage() {
 
   const fetchProfile = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_HOST}/api/users/${id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOST}/api/users/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -34,17 +37,22 @@ function ProfilePage() {
   }, [token]);
 
   return (
-    <div className="profile-page">
-      <h2>Profile Page</h2>
-      <img
-        src="/Generic-Profile.png"
-        alt="Generic Profile"
-        style={{ width: "200px", height: "200px" }}/>
+    <div className="card">
+      <h2>Profile</h2>
       <div>
-        <strong>Username:</strong> {username}
-      </div>
-      <div>
-        <strong>Email:</strong> {email}
+        <img
+          src="/Generic-Profile.png"
+          alt="Generic Profile"
+          className="profile-image"
+        />
+        <div className="profile-details">
+          <div>
+            <strong>Username:</strong> {username}
+          </div>
+          <div>
+            <strong>Email:</strong> {email}
+          </div>
+        </div>
       </div>
     </div>
   );

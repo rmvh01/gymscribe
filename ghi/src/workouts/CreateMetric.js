@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate, useParams } from "react-router-dom";
 
-
 function CreateMetric() {
   const { token } = useToken();
   const [name, setName] = useState("");
@@ -13,15 +12,13 @@ function CreateMetric() {
     setName(e.target.value);
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newWorkoutID = parseInt(workout_id);
-     let data = {
-       workout_id: newWorkoutID,
-       name: name,
-     };
+    let data = {
+      workout_id: newWorkoutID,
+      name: name,
+    };
     const Url = `${process.env.REACT_APP_API_HOST}/api/metrics`;
     data = JSON.stringify(data);
 
@@ -52,7 +49,9 @@ function CreateMetric() {
         </div>
         <button type="submit">Create Metric</button>
       </form>
-      <button onClick={() => navigate(-1)}>Finalize Workout</button>
+      <button onClick={() => navigate(`/workout/${workout_id}/view`)}>
+        Finalize Workout
+      </button>
     </div>
   );
 }

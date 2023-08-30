@@ -131,3 +131,13 @@ td {
 thead th {
   background-color: #f2f2f2;
 }
+
+.profile-image {
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+}
+
+.profile-details {
+  margin-top: 1em;
+}
