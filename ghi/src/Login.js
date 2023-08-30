@@ -1,17 +1,20 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
   const { login } = useToken();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(username, password); // Assuming login returns a promise
+      await login(username, password);
       setLoginSuccess(true);
+      navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
       setLoginSuccess(false);
@@ -21,7 +24,7 @@ const LoginForm = () => {
 
   return (
     <div className="card text-bg-light mb-3">
-      <h5 className="card-header">Login</h5>
+      <h2 className="card-header">Login</h2>
       <div className="card-body">
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="mb-3">

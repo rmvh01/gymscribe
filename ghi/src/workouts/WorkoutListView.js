@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react"; // Uncomment if you use this
+import "../styles.css";
 
 function WorkoutListView() {
   const { token } = useToken();
@@ -33,7 +34,6 @@ function WorkoutListView() {
   }, []);
 
   useEffect(() => {
-    // Fetch all exercises associated with the user
     const fetchExercises = async () => {
       try {
         const response = await fetch(
@@ -82,6 +82,7 @@ function WorkoutListView() {
             ))}
           </tbody>
         </table>
+        <button onClick={() => navigate("/workout")}>Create Workout</button>
       </div>
       <div className="exercise-section">
         <h1>Exercise List</h1>

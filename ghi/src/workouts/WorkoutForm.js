@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import "../styles.css";
 
 function WorkoutForm() {
   const { token } = useToken();
@@ -15,6 +16,7 @@ function WorkoutForm() {
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let data = {};
@@ -28,7 +30,6 @@ function WorkoutForm() {
     data.description = description;
     data.date = formatted_date;
 
-    console.log(data);
     const workoutUrl = `${process.env.REACT_APP_API_HOST}/api/workout`;
     data = JSON.stringify(data);
     const fetchConfig = {
@@ -43,30 +44,31 @@ function WorkoutForm() {
     if (response.ok) {
       const workout = await response.json();
       const workoutId = workout.id;
-      console.log(workoutId);
       setTitle("");
       setDescription("");
-      console.log("Workout Created Successfully");
       navigate(`/workout/${workoutId}`);
-    } else {
-      console.log("Workout could not be post");
     }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} id="Create Workout Form">
-        <div>
-          <label>Name Your Workout:</label>
-          <input type="text" value={title} onChange={handleTitleChange} />
-        </div>
-        <div>
-          <label>Describe your Workout:</label>
-          <textarea value={description} onChange={handleDescriptionChange} />
-        </div>
-        <button type="submit">Create/Select Exercises</button>
-      </form>
+    <div className="container">
+      <div className="workout-section">
+        <h1 className="text-center mb-3">Create a New Workout</h1>
+        <form onSubmit={handleSubmit} id="Create_Workout_Form">
+          <div>
+            <label>Name Your Workout:</label>
+            <input type="text" value={title} onChange={handleTitleChange} />
+          </div>
+          <div>
+            <label>Describe your Workout:</label>
+            <textarea value={description} onChange={handleDescriptionChange} />
+          </div>
+          <button type="submit">Create/Select Exercises</button>
+        </form>
+      </div>
+      <button onClick={() => navigate(-1)}>Back</button>
     </div>
   );
 }
+
 export default WorkoutForm;

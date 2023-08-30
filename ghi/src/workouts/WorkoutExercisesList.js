@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react"; // Uncomment if you use this
+import "../styles.css";
 
 // we need:
 // one useState for the list of exercises, this should be filtered by user_id, and against the exercises already in the workout
@@ -150,8 +151,8 @@ function WorkoutExercisesList() {
   };
 
   return (
-    <div className="container mt-5 pt-1">
-      <div className="mt-5">
+    <div className="container">
+      <div className="exercises-not-in-workout-section">
         <h1 className="text-center mb-3">Exercises</h1>
         <table className="table">
           <thead>
@@ -179,6 +180,9 @@ function WorkoutExercisesList() {
         <button onClick={() => navigate("/exercises")}>
           Create an Exercise
         </button>
+      </div>
+
+      <div className="exercises-in-workout-section">
         <h1 className="text-center mb-3">Exercises In Workout</h1>
         <table className="table">
           <thead>
