@@ -30,20 +30,19 @@ function ShowOneWorkout() {
       <h2>Workout Description: {workoutdata.description}</h2>
 
       <table>
-        {/* <thead> */}
+        <thead>
         <tr>
           <th></th>
           {workoutdata.metrics.map((metric) => (
             <th key={metric.id}>{metric.name}</th>
           ))}
         </tr>
-        {/* </thead> */}
-        {/* <tbody> */}
+        </thead>
+        <tbody>
         {/* <!-- Loop through exercise names --> */}
-        <tr>
           {workoutdata.exercises.map((exercise) => (
             <tr key={exercise.id}>
-              <td>{exercise.name}</td>
+              <th>{exercise.name}</th>
               {workoutdata.metrics.map((metric) => (
                 <td key={metric.id}>
                   <input type="text" />
@@ -51,8 +50,7 @@ function ShowOneWorkout() {
               ))}
             </tr>
           ))}
-        </tr>
-        {/* </tbody> */}
+        </tbody>
       </table>
     </div>
   );
