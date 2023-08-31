@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-
 function ShowOneWorkout() {
   const { workout_id } = useParams();
   const [workoutdata, setWorkoutData] = useState({});
@@ -9,15 +8,15 @@ function ShowOneWorkout() {
   const [metricValue, setMetricValue] = useState();
   const [metricId, setMetricId] = useState();
   const [exerciseId, setExerciseId] = useState();
+  const [existence, setExistence] = useState("");
 
   const fetchData = async () => {
     const newWorkoutId = parseInt(workout_id);
-    const url = `${process.env.REACT_APP_API_HOST}/api/workout/${newWorkoutId}`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/workouts/${newWorkoutId}`;
     const response = await fetch(url);
     const json = await response.json();
     setWorkoutData(json);
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -28,35 +27,71 @@ function ShowOneWorkout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = `${process.env.REACT_APP_API_HOST}/api/metric_values`;
-    let data = {
-      metric_id: Number(metricId),
-      value: Number(metricValue),
-      exercise_id: Number(exerciseId),
-    };
-    data = JSON.stringify(data);
-    console.log(data);
-    const fetchConfig = {
-      method: "POST",
-      body: data,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    try {
-      const response = await fetch(url, fetchConfig);
-      if (response.ok) {
-        console.log("post successful");
+    if (existence === "_") {
+      const url = `${process.env.REACT_APP_API_HOST}/api/metric_values`;
+      let data = {
+        metric_id: Number(metricId),
+        value: Number(metricValue),
+        exercise_id: Number(exerciseId),
+      };
+      data = JSON.stringify(data);
+      console.log(data);
+      const fetchConfig = {
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      try {
+        const response = await fetch(url, fetchConfig);
+        if (response.ok) {
+          console.log("post successful");
+        }
+      } catch {
+        console.log("failed to post");
       }
-    } catch {
-      console.log("failed to post");
+    } else {
+      for (let value of workoutdata.metric_values) {
+        if (
+          value.value === parseInt(existence) &&
+          value.exercise_id === Number(exerciseId) &&
+          value.metric_id === Number(metricId)
+        ) {
+          // do the put
+          const metric_value_id = value.id;
+          console.log(metric_value_id);
+          const mvUrl = `${process.env.REACT_APP_API_HOST}/api/metric_values/${metric_value_id}`;
+          let data = {
+            metric_id: value.metric_id,
+            exercise_id: value.exercise_id,
+            value: metricValue,
+          };
+          console.log(metric_value_id);
+          const content = JSON.stringify(data);
+          console.log(content);
+          const fetchConfig = {
+            method: "PUT",
+            body: content,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          };
+          const response = await fetch(mvUrl, fetchConfig);
+          if (response.ok) {
+            console.log("put successful");
+          }
+        } else {
+          console.log("failure");
+        }
+      }
     }
   };
 
   const handleChange = (e) => {
     const stringToParse = String(e.target.name);
-    console.log(e.target.value);
     let metricID = "";
     let exerciseID = "";
     let trigger = false;
@@ -69,10 +104,29 @@ function ShowOneWorkout() {
         exerciseID += stringToParse[i];
       }
     }
+    const exists = checkExistence(metricId, exerciseId);
+    console.log(exists);
+    setExistence(exists);
     console.log(metricID, exerciseID);
     setMetricValue(e.target.value);
     setMetricId(metricID);
     setExerciseId(exerciseID);
+  };
+
+  const checkExistence = (metric_id, exercise_id) => {
+    if (workoutdata.metric_values === []) {
+      return "_";
+    } else {
+      for (let value of workoutdata.metric_values) {
+        if (
+          workoutdata.metric_values.metric_id === metric_id &&
+          workoutdata.metric_values.exercise_id === exercise_id
+        ) {
+          return String(value);
+        }
+      }
+    }
+    return "_";
   };
 
   return (

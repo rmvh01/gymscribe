@@ -14,7 +14,7 @@ function EditWorkoutForm() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_HOST}/api/workout/${workout_id}`,
+          `${process.env.REACT_APP_API_HOST}/api/workouts/${workout_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -39,7 +39,7 @@ function EditWorkoutForm() {
     // Update the workout data using a PUT or PATCH request
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_HOST}/api/workout/${workout_id}`, // Assuming the ID is available in the function scope
+        `${process.env.REACT_APP_API_HOST}/api/workouts/${workout_id}`, // Assuming the ID is available in the function scope
         {
           method: "PUT", // Use 'PATCH' if you're doing a partial update
           headers: {

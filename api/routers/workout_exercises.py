@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 @router.post(
-    "/api/workout_exercise",
+    "/api/workout_exercises",
     response_model=WorkoutExerciseOut,
     tags=["Workout Exercises"]
 )

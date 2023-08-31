@@ -36,7 +36,7 @@ router = APIRouter()
 
 
 @router.post(
-    "/api/workout",
+    "/api/workouts",
     response_model=WorkoutOut,
     tags=["Workouts"]
 )
@@ -52,7 +52,7 @@ def create_workout(
 
 
 @router.get(
-    "/api/workout",
+    "/api/workouts",
     response_model=List[WorkoutOut],
     tags=["Workouts"],
 )
@@ -63,7 +63,7 @@ def get_workout(
 
 
 @router.delete(
-    "/api/workout/{workout_id}",
+    "/api/workouts/{workout_id}",
     response_model=dict,
     tags=["Workouts"]
 )
@@ -77,7 +77,7 @@ def delete_workout(
 
 
 @router.get(
-    "/api/workout/{workout_id}",
+    "/api/workouts/{workout_id}",
     response_model=TotalWorkoutOut,
     tags=["Workouts"]
 )
@@ -129,12 +129,12 @@ def get_workout_by_id(
     ]
     # use metric id's to filter again
     heavily_filtered_values = [
-        (
-            v.id,
-            v.value,
-            metric_repo.get_metric_by_id(v.id).name,
-            exercises_repo.get_exercise_by_id(v.exercise_id).name
-        )
+        {
+            "id": v.id,
+            "value": v.value,
+            "exercise_name": exercises_repo.get_exercise_by_id(v.exercise_id).name,
+            "exercise_id": exercises_repo.get_exercise_by_id(v.exercise_id).id,
+        }
         for v in filtered_by_exercise
         if v.metric_id in metric_ids
     ]
@@ -149,7 +149,7 @@ def get_workout_by_id(
 
 
 @router.put(
-    "/api/workout/{workout_id}",
+    "/api/workouts/{workout_id}",
     response_model=dict,
     tags=["Workouts"]
 )

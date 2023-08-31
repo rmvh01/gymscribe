@@ -30,7 +30,7 @@ function WorkoutForm() {
     data.description = description;
     data.date = formatted_date;
 
-    const workoutUrl = `${process.env.REACT_APP_API_HOST}/api/workout`;
+    const workoutUrl = `${process.env.REACT_APP_API_HOST}/api/workouts`;
     data = JSON.stringify(data);
     const fetchConfig = {
       method: "POST",

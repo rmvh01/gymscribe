@@ -30,7 +30,7 @@ def create_metric(
 
 
 @router.get(
-    "/api/metric",
+    "/api/metrics",
     response_model=List[MetricOut],
     tags=["Metrics"],
 )
@@ -41,7 +41,7 @@ def get_metrics(
 
 
 @router.get(
-    "/api/metric/{metric_id}",
+    "/api/metrics/{metric_id}",
     response_model=MetricOut,
     tags=["Metrics"]
 )
@@ -57,7 +57,7 @@ def get_metric_by_id(
 
 
 @router.put(
-    "/api/metric/{metric_id}",
+    "/api/metrics/{metric_id}",
     response_model=dict,
     tags=["Metrics"]
 )

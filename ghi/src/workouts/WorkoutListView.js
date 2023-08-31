@@ -13,7 +13,7 @@ function WorkoutListView() {
   const fetchData = async () => {
     try {
       const workoutDetailResponse = await fetch(
-        `${process.env.REACT_APP_API_HOST}/api/workout`,
+        `${process.env.REACT_APP_API_HOST}/api/workouts`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

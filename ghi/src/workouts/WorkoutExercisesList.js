@@ -47,7 +47,7 @@ function WorkoutExercisesList() {
   const fetchWorkoutExerciseIds = async (workout_id) => {
     try {
       const workoutExercisesResponse = await fetch(
-        `${process.env.REACT_APP_API_HOST}/api/workout/${workout_id}/exercises`
+        `${process.env.REACT_APP_API_HOST}/api/workouts/${workout_id}/exercises`
       );
       if (workoutExercisesResponse.ok) {
         const workoutExercisesJson = await workoutExercisesResponse.json();
@@ -86,7 +86,7 @@ function WorkoutExercisesList() {
   const fetchUserId = async () => {
     try {
       const workoutDetailResponse = await fetch(
-        `${process.env.REACT_APP_API_HOST}/api/workout/${workout_id}`
+        `${process.env.REACT_APP_API_HOST}/api/workouts/${workout_id}`
       );
       if (workoutDetailResponse.ok) {
         const workoutDetailJson = await workoutDetailResponse.json();
@@ -101,7 +101,7 @@ function WorkoutExercisesList() {
   const postExerciseToWorkoutExercises = async (exercise) => {
     // we have an exercise object in exercise
     // we need to the workout_id and the exercise_id to post
-    const url = `${process.env.REACT_APP_API_HOST}/api/workout_exercise`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/workout_exercises`;
     const newWorkoutId = parseInt(workout_id);
     const content = {
       exercise_id: exercise.id,
