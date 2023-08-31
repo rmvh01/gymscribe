@@ -77,6 +77,11 @@ function WorkoutListView() {
                   >
                     Edit
                   </button>
+                  <button
+                    onClick={() => navigate(`/workout/${workout.id}/view`)}
+                  >
+                    View
+                  </button>
                 </td>
               </tr>
             ))}

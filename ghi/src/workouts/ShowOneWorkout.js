@@ -130,7 +130,7 @@ function ShowOneWorkout() {
   };
 
   return (
-    <div>
+    <div className="workout-container">
       <h1>Workout Name: {workoutdata.name}</h1>
       <h2>Workout Description: {workoutdata.description}</h2>
       <table>
