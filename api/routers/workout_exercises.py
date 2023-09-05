@@ -32,7 +32,7 @@ def add_exercise_to_workout(
 
 
 @router.get(
-    "/api/workout/{workout_id}/exercises",
+    "/api/workouts/{workout_id}/exercises",
     response_model=List[int],
     tags=["Workout Exercises"]
 )

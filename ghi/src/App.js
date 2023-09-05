@@ -19,6 +19,7 @@ import WorkoutListView from "./workouts/WorkoutListView";
 import EditWorkoutForm from "./workouts/UpdateWorkoutForm";
 import ShowOneWorkout from "./workouts/ShowOneWorkout";
 import ProfilePage from "./users/ProfilePage";
+import WorkoutDetails from "./workouts/WorkoutDetails";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -50,8 +51,8 @@ function App() {
                 element={<CreateMetric />}
               />
               <Route
-                path="/workout/:workout_id/view"
-                element={<ShowOneWorkout />}
+                path="/workout/:workoutId/view"
+                element={<WorkoutDetails />}
               />
               <Route path="/workout/list" element={<WorkoutListView />} />
               <Route

@@ -152,3 +152,7 @@ thead th {
 .profile-details {
   margin-top: 1em;
 }
+
+.create-first-workout-button {
+  align-self: center;
+}

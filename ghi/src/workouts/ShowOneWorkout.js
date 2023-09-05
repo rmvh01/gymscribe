@@ -15,11 +15,13 @@ function ShowOneWorkout() {
     const url = `${process.env.REACT_APP_API_HOST}/api/workouts/${newWorkoutId}`;
     const response = await fetch(url);
     const json = await response.json();
+    console.log(json);
+    console.log(json.metric_values);
     setWorkoutData(json);
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [metricValue]);
 
   if (Object.keys(workoutdata).length === 0) {
     return <div>Loading...</div>;
@@ -55,9 +57,8 @@ function ShowOneWorkout() {
     } else {
       for (let value of workoutdata.metric_values) {
         if (
-          value.value === parseInt(existence) &&
-          value.exercise_id === Number(exerciseId) &&
-          value.metric_id === Number(metricId)
+          Number(value.exercise_id) === Number(exerciseId) &&
+          Number(value.metric_id) === Number(metricId)
         ) {
           // do the put
           const metric_value_id = value.id;
@@ -108,9 +109,11 @@ function ShowOneWorkout() {
     console.log(exists);
     setExistence(exists);
     console.log(metricID, exerciseID);
+    // before setting these states I can check existence
+
     setMetricValue(e.target.value);
-    setMetricId(metricID);
-    setExerciseId(exerciseID);
+    setMetricId(Number(metricID));
+    setExerciseId(Number(exerciseID));
   };
 
   const checkExistence = (metric_id, exercise_id) => {
@@ -119,9 +122,10 @@ function ShowOneWorkout() {
     } else {
       for (let value of workoutdata.metric_values) {
         if (
-          workoutdata.metric_values.metric_id === metric_id &&
-          workoutdata.metric_values.exercise_id === exercise_id
+          Number(value.metric_id) === metric_id &&
+          Number(value.exercise_id) === exercise_id
         ) {
+          console.log(value);
           return String(value);
         }
       }

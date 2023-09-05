@@ -135,6 +135,7 @@ def get_workout_by_id(
             "exercise_name":
                 exercises_repo.get_exercise_by_id(v.exercise_id).name,
             "exercise_id": exercises_repo.get_exercise_by_id(v.exercise_id).id,
+            "metric_id": v.metric_id,
         }
         for v in filtered_by_exercise
         if v.metric_id in metric_ids
