@@ -12,14 +12,14 @@ function WorkoutListView() {
   // Fetch workout data
   const fetchData = async () => {
     try {
-      const workoutDetailResponse = await fetch(
-        `${process.env.REACT_APP_API_HOST}/api/workouts`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const url = `${process.env.REACT_APP_API_HOST}/api/workouts`;
+      const fetchConfig = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const workoutDetailResponse = await fetch(url, fetchConfig);
       if (workoutDetailResponse.ok) {
         const workoutDetailJson = await workoutDetailResponse.json();
         setWorkouts(workoutDetailJson);
@@ -36,14 +36,14 @@ function WorkoutListView() {
   useEffect(() => {
     const fetchExercises = async () => {
       try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_HOST}/api/exercises`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const url = `${process.env.REACT_APP_API_HOST}/api/exercises`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const response = await fetch(url, fetchConfig);
         const exercisesData = await response.json();
         setExercises(exercisesData);
       } catch (error) {

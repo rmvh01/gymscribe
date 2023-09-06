@@ -37,8 +37,9 @@ def create_exercise(
 )
 def get_exercise(
     repo: ExerciseRepo = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    return repo.get_all_exercise()
+    return repo.get_all_exercise(user_id=account_data["id"])
 
 
 @router.delete(

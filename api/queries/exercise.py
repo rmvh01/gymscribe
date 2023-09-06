@@ -49,15 +49,17 @@ class ExerciseRepo:
                 old_data = exercise.dict()
                 return ExerciseOut(id=id, user_id=user_id, **old_data)
 
-    def get_all_exercise(self):
+    def get_all_exercise(self, user_id):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
                         SELECT id, name, description, user_id
-                        FROM exercises;
+                        FROM exercises
+                        WHERE user_id = %s;
                         """,
+                        [user_id],
                     )
                     result = cur.fetchall()
                     exercise = [
@@ -71,7 +73,8 @@ class ExerciseRepo:
                     ]
                     return exercise
         except Exception:
-            return {"message": "cannot get all exercise"}
+            print({"message": "cannot get all exercise"})
+            return []
 
     def delete_exercise(self, exercise_id: int):
         try:

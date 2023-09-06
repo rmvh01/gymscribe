@@ -16,8 +16,6 @@ function ShowMetricValue(metricID, exerciseID) {
   const fetchExistingMetricValue = async () => {
     const metricValues = await fetchMetricValues();
     let foundVal = null;
-    console.log(exerciseId, metricId);
-    console.log(metricValues);
     if (metricValues.length === undefined) {
       foundVal = null;
     } else {
@@ -32,7 +30,6 @@ function ShowMetricValue(metricID, exerciseID) {
           }
         }
         if (foundVal === null) {
-          console.log("hit");
           setMetricValue((prevMetricValue) => 0);
         }
       }
@@ -56,7 +53,6 @@ function ShowMetricValue(metricID, exerciseID) {
       value: newValue,
     };
     const content = JSON.stringify(data);
-    console.log(content);
     const fetchConfig = {
       method: "POST",
       body: content,
@@ -65,7 +61,6 @@ function ShowMetricValue(metricID, exerciseID) {
         Authorization: `Bearer ${token}`,
       },
     };
-    console.log(content);
     try {
       const response = await fetch(url, fetchConfig);
       if (response.ok) {
@@ -115,7 +110,6 @@ function ShowMetricValue(metricID, exerciseID) {
     const response = await fetch(url);
     if (response.ok) {
       const json = await response.json();
-      // console.log("ShowMetricValue json,", json);
       return json.metric_values;
     } else {
       console.log("failed to fetch workout data");
