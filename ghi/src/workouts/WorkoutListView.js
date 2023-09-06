@@ -54,6 +54,10 @@ function WorkoutListView() {
     fetchExercises();
   }, []);
 
+  if (!token) {
+    return <p>Sign up and log in to access the home page.</p>;
+  }
+
   return (
     <div className="container">
       <div className="workout-section">
@@ -73,7 +77,7 @@ function WorkoutListView() {
                 <td>{workout.description}</td>
                 <td>
                   <button
-                  className="margin-right"
+                    className="margin-right"
                     onClick={() => navigate(`/workoutform/${workout.id}`)}
                   >
                     Edit
