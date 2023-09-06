@@ -1,6 +1,6 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -89,6 +89,9 @@ const LoginForm = () => {
                 />
               </div>
             </form>
+            <p className="mt-3">
+              Don't have an account? <Link to="/signup">Sign Up</Link>
+            </p>
             <p>Logged In: {String(loginSuccess)}</p>
           </div>
         </div>
