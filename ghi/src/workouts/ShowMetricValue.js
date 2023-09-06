@@ -91,7 +91,6 @@ function ShowMetricValue(metricID, exerciseID) {
         Authorization: `Bearer ${token}`,
       },
     };
-    console.log("put content", content);
     try {
       const response = await fetch(url, fetchConfig);
       if (response.ok) {
@@ -137,7 +136,7 @@ function ShowMetricValue(metricID, exerciseID) {
       {!hasChanged ? (
         <>
           <td>
-            <p>Submit a value:</p>
+            <h4>Submit a value:</h4>
             <form onSubmit={handlePost}>
               <input type="text" onChange={handleChange} />
               <button type="submit">+</button>
@@ -147,6 +146,7 @@ function ShowMetricValue(metricID, exerciseID) {
       ) : (
         <>
           <td>
+            <h4>Current Value: {metricValue}</h4>
             <form onSubmit={handlePut}>
               <input type="text" onChange={handleChange} />
               <button type="submit">+</button>

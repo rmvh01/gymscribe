@@ -33,6 +33,7 @@ function DetailWorkout() {
         <>
           <h1>Workout Name: {workoutData.name}</h1>
           <h2>Workout Description: {workoutData.description}</h2>
+          <h3>{workoutData.date}</h3>
           <table>
             <thead>
               <tr>
