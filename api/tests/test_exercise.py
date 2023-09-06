@@ -1,7 +1,6 @@
 from fastapi.testclient import TestClient
 from main import app
-from queries.exercise import ExerciseRepo, ExerciseOut
-from authenticator import authenticator
+from queries.exercise import ExerciseRepo
 
 client = TestClient(app)
 
@@ -29,7 +28,7 @@ class FakeExerciseRepo:
             },
         ]
 
-    def get_exercise_by_id(self,exercise_id):
+    def get_exercise_by_id(self, exercise_id):
         for exercise in self.get_all_exercise():
             if exercise["id"] == exercise_id:
                 return exercise
@@ -69,7 +68,6 @@ def test_get_exercise_detail():
     app.dependency_overrides[ExerciseRepo] = FakeExerciseRepo
     response = client.get("/api/exercises/1")
     data = response.json()
-    
     expected_data = {
         "name": "Fake Exercise  1",
         "description": "Description 1",
