@@ -1,13 +1,12 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
   const { login } = useToken();
-  const navigate = useNavigate();
   const [hasChanged, setHasChanged] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -16,7 +15,6 @@ const LoginForm = () => {
       await login(username, password);
       setLoginSuccess(true);
       setHasChanged(!hasChanged);
-      // navigate("/workout/list");
     } catch (error) {
       console.error("Login failed:", error);
     }

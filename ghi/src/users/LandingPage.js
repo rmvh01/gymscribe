@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles.css"; // Assuming styles.css is in the same directory
+import "../styles.css";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function LandingPage() {
