@@ -63,9 +63,14 @@ function WorkoutExercisesList() {
 
   const fetchExerciseData = async () => {
     try {
-      const exercisesResponse = await fetch(
-        `${process.env.REACT_APP_API_HOST}/api/exercises`
-      );
+      const url = `${process.env.REACT_APP_API_HOST}/api/exercises`;
+      const fetchConfig = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const exercisesResponse = await fetch(url, fetchConfig);
       if (exercisesResponse.ok) {
         const exercisesJson = await exercisesResponse.json();
         // fitler that json for user_id

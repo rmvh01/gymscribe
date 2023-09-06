@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Routes,
-  useParams,
-} from "react-router-dom";
-import SignUp from "./SignUp";
-import LoginForm from "./Login";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import SignUp from "./users/SignUp";
+import LoginForm from "./users/Login";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import LandingPage from "./users/LandingPage";
 import LoginLandingPageNewUser from "./workouts/CreateWorkout";
@@ -17,7 +11,6 @@ import CreateExercise from "./workouts/CreateExercise";
 import CreateMetric from "./workouts/CreateMetric";
 import WorkoutListView from "./workouts/WorkoutListView";
 import EditWorkoutForm from "./workouts/UpdateWorkoutForm";
-import ShowOneWorkout from "./workouts/ShowOneWorkout";
 import ProfilePage from "./users/ProfilePage";
 import WorkoutDetails from "./workouts/WorkoutDetails";
 
@@ -29,15 +22,15 @@ function App() {
       <Router basename={basename}>
         <div className="app">
           <nav>
+            <Link to="/workout/list">Home</Link>
             <Link to="/signup">Sign Up</Link>
             <Link to="/login">Login</Link>
-            <Link to="/">Home</Link>
           </nav>
           <Routes>
+            <Route path="/" element={<LandingPage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/" element={<WorkoutListView />} />
             <Route
               path="/LandingPageNewUser"
               element={<LoginLandingPageNewUser />}
@@ -60,7 +53,6 @@ function App() {
                 element={<EditWorkoutForm />}
               />
             </Route>
-            {/* <Route path="/WorkoutExercises" element={<ExercisesList />} /> */}
           </Routes>
         </div>
       </Router>

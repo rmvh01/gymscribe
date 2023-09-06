@@ -11,7 +11,6 @@ function DetailWorkout() {
     const response = await fetch(url);
     if (response.ok) {
       const json = await response.json();
-      // console.log(json);
       setWorkoutData(json);
     } else {
       console.log("fetch failed");

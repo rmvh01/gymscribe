@@ -57,9 +57,10 @@ def create_workout(
     tags=["Workouts"],
 )
 def get_workout(
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: WorkoutRepo = Depends(),
 ):
-    return repo.get_all_workouts()
+    return repo.get_all_workouts(user_id=account_data["id"])
 
 
 @router.delete(

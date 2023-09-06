@@ -42,6 +42,7 @@ function WorkoutForm() {
     };
     const response = await fetch(workoutUrl, fetchConfig);
     if (response.ok) {
+      console.log("workout post successful");
       const workout = await response.json();
       const workoutId = workout.id;
       setTitle("");

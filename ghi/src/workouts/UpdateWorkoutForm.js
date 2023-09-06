@@ -55,7 +55,7 @@ function EditWorkoutForm() {
         console.log("Workout updated successfully");
 
         // Navigate back to the list or some other page
-        navigate("/workout/list"); // Replace '/workouts' with the actual path you want to navigate to
+        navigate(`/workout/${workout_id}`); // Replace '/workouts' with the actual path you want to navigate to
       } else {
         // Handle errors
         console.error("Failed to update workout");
