@@ -50,6 +50,8 @@ function WorkoutForm() {
       navigate(`/workout/${workoutId}`);
     }
   };
+
+  console.log("token:", token);
   if (!token) {
     return <p>Sign up and log in to access the home page.</p>;
   }

@@ -15,6 +15,7 @@ const useLogout = () => {
 
       if (response.status === 200) {
         console.log("Successfully logged out");
+
       } else {
         console.log("Failed to logout");
       }
