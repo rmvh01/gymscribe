@@ -103,7 +103,6 @@ class UserRepo(BaseModel):
                     hashed_password=row[3],
                 )
 
-
     def delete_user(self, id: int):
         with pool.connection() as conn:
             with conn.cursor() as cur:

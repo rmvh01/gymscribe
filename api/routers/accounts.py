@@ -84,7 +84,6 @@ def get_user(
         raise HTTPException(status_code=404, detail="User not found")
 
 
-
 @router.delete("/api/users/{id}", response_model=bool, tags=["Users"])
 def delete_user(id: int, repo: UserRepo = Depends()):
     repo.delete_user(id)
