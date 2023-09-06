@@ -13,10 +13,12 @@ import WorkoutListView from "./workouts/WorkoutListView";
 import EditWorkoutForm from "./workouts/UpdateWorkoutForm";
 import ProfilePage from "./users/ProfilePage";
 import WorkoutDetails from "./workouts/WorkoutDetails";
+import useLogout from "./users/LogOut";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
+  const logout = useLogout();
   return (
     <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
       <Router basename={basename}>
@@ -25,6 +27,7 @@ function App() {
             <Link to="/workout/list">Home</Link>
             <Link to="/signup">Sign Up</Link>
             <Link to="/login">Login</Link>
+            <Link onClick={logout}>Logout</Link>
           </nav>
           <Routes>
             <Route path="/" element={<LandingPage />} />
