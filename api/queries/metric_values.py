@@ -61,8 +61,9 @@ class MetricValueRepo:
         except Exception:
             return {"message": "cannot get all metric values"}
 
-
-    def get_metric_value_by_id(self, metric_value_id: int):
+    def get_metric_value_by_id(
+            self, metric_value_id: int
+    ):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:

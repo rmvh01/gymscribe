@@ -85,7 +85,6 @@ class WorkoutRepo:
         except Exception:
             return []
 
-
     def get_workout_by_id(self, workout_id: int):
         try:
             with pool.connection() as conn:
