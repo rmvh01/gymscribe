@@ -5,7 +5,6 @@ from queries.workouts import WorkoutRepo
 client = TestClient(app)
 
 
-# Fake repository for Workout
 class FakeWorkoutRepo:
     def get_all_workouts(self, user_id):
         return [
@@ -26,7 +25,7 @@ class FakeWorkoutRepo:
         ]
 
     def get_workout_by_id(self, workout_id):
-        for workout in self.get_all_workouts(1): 
+        for workout in self.get_all_workouts(1):
             if workout["id"] == workout_id:
                 return workout
         return None
