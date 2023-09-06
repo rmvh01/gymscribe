@@ -155,6 +155,10 @@ function WorkoutExercisesList() {
     }
   };
 
+  if (!token) {
+    return <p>Sign up and log in to access the home page.</p>;
+  }
+
   return (
     <div className="container">
       <div className="exercises-not-in-workout-section">

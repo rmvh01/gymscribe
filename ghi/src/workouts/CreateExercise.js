@@ -42,6 +42,10 @@ function CreateExercise() {
     }
   };
 
+  if (!token) {
+    return <p>Sign up and log in to access the home page.</p>;
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit} id="Create_Workout_Form">

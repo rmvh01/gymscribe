@@ -70,14 +70,3 @@ def update_metric_value_data(
         raise HTTPException(
             status_code=404, detail="Cannot update metric value data"
         )
-
-
-@router.delete(
-    "/api/metric_values/{metric_value_id}",
-    tags=["Metric Values"]
-)
-def delete_metric_value(
-    metric_value_id: int,
-    repo: MetricValueRepo = Depends(),
-):
-    return repo.delete_metric_value(metric_value_id)

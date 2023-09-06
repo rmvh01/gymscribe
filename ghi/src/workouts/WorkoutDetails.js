@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ShowMetricValue from "./ShowMetricValue";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function DetailWorkout() {
+  const { token } = useToken();
   const { workoutId } = useParams();
   const [workoutData, setWorkoutData] = useState({});
 
@@ -20,6 +22,10 @@ function DetailWorkout() {
   useEffect(() => {
     fetchWorkout();
   }, [workoutId]);
+
+  if (!token) {
+    return <p>Sign up and log in to access the home page.</p>;
+  }
 
   return (
     <div className="workout-container">

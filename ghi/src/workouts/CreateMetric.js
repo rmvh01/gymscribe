@@ -39,6 +39,9 @@ function CreateMetric() {
       console.log("Metrics did not post");
     }
   };
+  if (!token) {
+    return <p>Sign up and log in to access the home page.</p>;
+  }
 
   return (
     <div>
@@ -52,6 +55,7 @@ function CreateMetric() {
       <button onClick={() => navigate(`/workout/${workout_id}/view`)}>
         Finalize Workout
       </button>
+      <button onClick={() => navigate(-1)}>Back</button>
     </div>
   );
 }

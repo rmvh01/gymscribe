@@ -160,3 +160,27 @@ thead th {
 .margin-right {
   margin-right: 10px;
 }
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.landing-title {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.landing-subtitle {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.landing-login-button-link {
+  text-decoration: none;
+  margin-top: 20px;
+}

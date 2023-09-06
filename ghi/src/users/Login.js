@@ -89,7 +89,7 @@ const LoginForm = () => {
                 />
               </div>
             </form>
-            <p>Login Successful: {String(loginSuccess)}</p>
+            <p>Logged In: {String(loginSuccess)}</p>
           </div>
         </div>
       )}

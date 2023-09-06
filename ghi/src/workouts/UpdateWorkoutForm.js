@@ -65,6 +65,11 @@ function EditWorkoutForm() {
       console.error("An error occurred while updating the workout:", error);
     }
   };
+
+  if (!token) {
+    return <p>Sign up and log in to access the home page.</p>;
+  }
+
   return (
     <div className="container">
       <div className="workout-section">
