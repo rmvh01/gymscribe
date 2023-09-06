@@ -23,21 +23,46 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 function App() {
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
-  const { logout } = useToken();
+  const { token, logout } = useToken();
   async function handleLogout() {
     await logout();
   }
   return (
     <Router basename={basename}>
       <div className="app">
-        <nav>
-          <Link to="/workout/list">Home</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/login">Login</Link>
-          <button onClick={handleLogout}>Logout</button>
+        <nav
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "10px 20px",
+          }}
+        >
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div>
+              <Link to="/workout/list">Home</Link>
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/login">Login</Link>
+              <Link to="/profile">Profile</Link>
+            </div>
+          </div>
+          {token && ( // Only show Logout button if user is logged in
+            <button className="logout-button" onClick={handleLogout}>
+              Logout
+            </button>
+          )}
         </nav>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/"
+            element={token ? <WorkoutListView /> : <LandingPage />}
+          />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/profile" element={<ProfilePage />} />
