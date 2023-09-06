@@ -6,6 +6,7 @@ from authenticator import authenticator
 
 client = TestClient(app)
 
+
 class FakeMetricRepo:
     def get_metrics(self):
         return [
@@ -26,12 +27,14 @@ class FakeMetricRepo:
             },
         ]
 
+
 def fake_get_current_account_data():
     return UserOut(
         id=1,
         username="test",
         email="test@test.com",
     )
+
 
 def test_get_metrics():
     app.dependency_overrides[
