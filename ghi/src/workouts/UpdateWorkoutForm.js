@@ -35,33 +35,26 @@ function EditWorkoutForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Update the workout data using a PUT or PATCH request
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_HOST}/api/workouts/${workout_id}`, // Assuming the ID is available in the function scope
+        `${process.env.REACT_APP_API_HOST}/api/workouts/${workout_id}`,
         {
-          method: "PUT", // Use 'PATCH' if you're doing a partial update
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Assuming the token is available in the function scope
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(workout), // workout is the state variable containing the form data
+          body: JSON.stringify(workout),
         }
       );
 
       if (response.ok) {
-        // Successfully updated the workout
         console.log("Workout updated successfully");
-
-        // Navigate back to the list or some other page
-        navigate(`/workout/${workout_id}`); // Replace '/workouts' with the actual path you want to navigate to
+        navigate(`/workout/${workout_id}`);
       } else {
-        // Handle errors
         console.error("Failed to update workout");
       }
     } catch (error) {
-      // Handle errors
       console.error("An error occurred while updating the workout:", error);
     }
   };
