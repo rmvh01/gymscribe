@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useToken from "@galvanize-inc/jwtdown-for-react"; // Uncomment if you use this
+import useToken from "@galvanize-inc/jwtdown-for-react";
 import "../styles.css";
 
 function WorkoutListView() {
@@ -9,7 +9,7 @@ function WorkoutListView() {
   const [workouts, setWorkouts] = useState([]);
   const [exercises, setExercises] = useState([]);
 
-  // Fetch workout data
+
   const fetchData = async () => {
     try {
       const url = `${process.env.REACT_APP_API_HOST}/api/workouts`;
