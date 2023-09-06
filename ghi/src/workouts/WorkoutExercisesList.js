@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import useToken from "@galvanize-inc/jwtdown-for-react"; // Uncomment if you use this
+import useToken from "@galvanize-inc/jwtdown-for-react";
 import "../styles.css";
 
-// we need:
-// one useState for the list of exercises, this should be filtered by user_id, and against the exercises already in the workout
-// a second useState for the list of exercises in the workout
 
 function WorkoutExercisesList() {
-  // const token, and useState for (exercises not in workout) and one for (exercises in the workout)
   const { token } = useToken();
   const navigate = useNavigate();
   const { workout_id } = useParams();
   const [exercisesNotInWorkout, setExercisesNotInWorkout] = useState([]);
   const [exercisesInWorkout, setExercisesInWorkout] = useState([]);
   const [forceRefresh, setForceRefresh] = useState(false);
-  // workout_id from use_params to get user_id from get one workout query
 
-  // this block is for initial population
-
-  // fetch workout_exercise data: a list of exercise_ids
   const fetchData = async () => {
     const filteredExerciseData = await fetchExerciseData();
     const exerciseIdList = await fetchWorkoutExerciseIds(workout_id);
@@ -40,10 +32,6 @@ function WorkoutExercisesList() {
     fetchData();
   }, [forceRefresh]);
 
-  // fetch exercise data: a list of exercise objects filtered by user_id
-
-  // filter that exercise data for the user,
-
   const fetchWorkoutExerciseIds = async (workout_id) => {
     try {
       const workoutExercisesResponse = await fetch(
@@ -51,7 +39,7 @@ function WorkoutExercisesList() {
       );
       if (workoutExercisesResponse.ok) {
         const workoutExercisesJson = await workoutExercisesResponse.json();
-        return workoutExercisesJson; // this json is a list of exercise_ids that are in the workout
+        return workoutExercisesJson;
       } else {
         return [];
       }
@@ -73,7 +61,6 @@ function WorkoutExercisesList() {
       const exercisesResponse = await fetch(url, fetchConfig);
       if (exercisesResponse.ok) {
         const exercisesJson = await exercisesResponse.json();
-        // fitler that json for user_id
         const user_id = await fetchUserId();
         const newExercises = [];
         for (let exercise of exercisesJson) {
@@ -81,7 +68,7 @@ function WorkoutExercisesList() {
             newExercises.push(exercise);
           }
         }
-        return newExercises; // these are only the user's exercises
+        return newExercises;
       }
     } catch {
       console.log("failed to fetch exercise data");
@@ -104,8 +91,6 @@ function WorkoutExercisesList() {
   };
 
   const postExerciseToWorkoutExercises = async (exercise) => {
-    // we have an exercise object in exercise
-    // we need to the workout_id and the exercise_id to post
     const url = `${process.env.REACT_APP_API_HOST}/api/workout_exercises`;
     const newWorkoutId = parseInt(workout_id);
     const content = {
