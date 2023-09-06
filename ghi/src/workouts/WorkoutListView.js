@@ -73,6 +73,7 @@ function WorkoutListView() {
                 <td>{workout.description}</td>
                 <td>
                   <button
+                  className="margin-right"
                     onClick={() => navigate(`/workoutform/${workout.id}`)}
                   >
                     Edit

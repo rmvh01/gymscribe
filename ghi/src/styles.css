@@ -39,7 +39,7 @@ label {
 input[type="text"],
 textarea {
   display: block;
-  width: 100%;
+  width: 95%;
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
@@ -155,4 +155,8 @@ thead th {
 
 .create-first-workout-button {
   align-self: center;
+}
+
+.margin-right {
+  margin-right: 10px;
 }
