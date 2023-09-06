@@ -4,7 +4,6 @@ import SignUp from "./users/SignUp";
 import LoginForm from "./users/Login";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import LandingPage from "./users/LandingPage";
-import LoginLandingPageNewUser from "./workouts/CreateWorkout";
 import WorkoutForm from "./workouts/WorkoutForm";
 import ExercisesList from "./workouts/WorkoutExercisesList";
 import CreateExercise from "./workouts/CreateExercise";
@@ -31,10 +30,6 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route
-              path="/LandingPageNewUser"
-              element={<LoginLandingPageNewUser />}
-            />
             <Route path="">
               <Route path="/workout/:workout_id" element={<ExercisesList />} />
               <Route path="/workout" element={<WorkoutForm />} />

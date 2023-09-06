@@ -61,20 +61,6 @@ class MetricValueRepo:
         except Exception:
             return {"message": "cannot get all metric values"}
 
-    def delete_metric_value(self, metric_value_id: int):
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """
-                        DELETE FROM metric_values
-                        WHERE id = %s;
-                        """,
-                        [metric_value_id],
-                    )
-                    return {"message": "Metric value deleted successfully!"}
-        except Exception:
-            return {"message": "Failed to delete metric value"}
 
     def get_metric_value_by_id(self, metric_value_id: int):
         try:

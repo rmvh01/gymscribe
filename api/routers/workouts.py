@@ -63,20 +63,6 @@ def get_workout(
     return repo.get_all_workouts(user_id=account_data["id"])
 
 
-@router.delete(
-    "/api/workouts/{workout_id}",
-    response_model=dict,
-    tags=["Workouts"]
-)
-def delete_workout(
-    workout_id: int,
-    repo: WorkoutRepo = Depends(),
-):
-    return repo.delete_workout(
-        workout_id
-    )
-
-
 @router.get(
     "/api/workouts/{workout_id}",
     response_model=TotalWorkoutOut,
