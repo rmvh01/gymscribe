@@ -104,17 +104,13 @@ def get_workout_by_id(
     }
     complete_workout.update(exercise_names)
 
-    # Query all the metric values
     all_values = metric_value_repo.get_all_metric_values()
-    # Query metric_ids
     metric_ids = [
         val["id"] for val in metric_repo.get_filtered_metrics(workout_id)
     ]
-    # Use all values and the exercise id's to filter once
     filtered_by_exercise = [
         v for v in all_values if v.exercise_id in exercise_ids
     ]
-    # use metric id's to filter again
     heavily_filtered_values = [
         {
             "id": v.id,
@@ -127,7 +123,6 @@ def get_workout_by_id(
         for v in filtered_by_exercise
         if v.metric_id in metric_ids
     ]
-    # use the results of the above comprehension to format the data
     values = {"metric_values": heavily_filtered_values}
     complete_workout.update(values)
 

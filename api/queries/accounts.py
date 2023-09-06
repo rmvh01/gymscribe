@@ -103,27 +103,6 @@ class UserRepo(BaseModel):
                     hashed_password=row[3],
                 )
 
-    # def update_user(self, id: int, user: UserIn) -> UserOut:
-    #     with pool.connection() as conn:
-    #         with conn.cursor() as cur:
-    #             cur.execute(
-    #                 """
-    #                 UPDATE users
-    #                 SET username = %(username)s,
-    #                     email = %(email)s
-    #                 WHERE id = %(id)s
-    #                 RETURNING id, username, email;
-    #                 """,
-    #                 {"id": id, **user.dict(exclude_unset=True)},
-    #             )
-    #             row = cur.fetchone()
-    #             if row is None:
-    #                 return None
-    #             return UserOut(
-    #                 id=row[0],
-    #                 username=row[1],
-    #                 email=row[2],
-    #             )
 
     def delete_user(self, id: int):
         with pool.connection() as conn:
