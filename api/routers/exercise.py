@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.post(
         "/api/exercises",
-        response_model=ExerciseIn,
+        response_model=ExerciseOut,
         tags=["Exercises"]
 )
 def create_exercise(
@@ -39,7 +39,6 @@ def get_exercise(
     repo: ExerciseRepo = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    account_data = dict(account_data)
     return repo.get_all_exercise(user_id=account_data["id"])
 
 
